@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Simulador Carrito de Compras</title>
+  </head>
+  <body>
+    <section class="mainContainer">
+      <h1 class="mainTitle">Tienda de Alfombras</h1>
+      <h2 class="subTitle">
+        Por favor elije los modelos de alfombras que desees.
+      </h2>
+      <h3 class="monto">Total a Pagar: $0</h3>
+      <form class="formContainer" action="">
+        <div class="productContainer">
+          <div class="indivProduct">
+            <label id="1" class="indivProduct_name"
+              >Alfombra Lisa 1x1 - $1.500</label
+            >
+            <input
+              type="number"
+              name="Alfombra lisa 1x1"
+              id="1"
+              min="0"
+              class="indivProduct_quantity"
+              placeholder="0"
+            />
+          </div>
+          <div class="indivProduct">
+            <label id="2" class="indivProduct_name"
+              >Alfombra Trama 1x1 - $2.300
+            </label>
+            <input
+              type="number"
+              name="Alfombra Trama 1x 1"
+              id="2"
+              min="0"
+              class="indivProduct_quantity"
+              placeholder="0"
+            />
+          </div>
+          <div class="indivProduct">
+            <label id="3" class="indivProduct_name"
+              >Alfombra Rayas 1x0.5 - $1.500
+            </label>
+            <input
+              type="number"
+              name="Alfombra Rayas 1x0.5"
+              id="3"
+              min="0"
+              class="indivProduct_quantity"
+              placeholder="0"
+            />
+          </div>
+          <div class="indivProduct">
+            <label id="4" class="indivProduct_name"
+              >Alfombra Negra 2x2 - $3.500
+            </label>
+            <input
+              type="number"
+              name="Alfombra Negra 2x2"
+              id="4"
+              min="0"
+              class="indivProduct_quantity"
+              placeholder="0"
+            />
+          </div>
+        </div>
+        <input type="submit" class="btn_submit" value="Comprar" />
+        <input type="reset" class="btn_reset" value="Borrar" />
+      </form>
+    </section>
+    <script src="app.js"></script>
+  </body>
+</html>
