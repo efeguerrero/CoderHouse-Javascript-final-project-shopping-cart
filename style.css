@@ -71,6 +71,7 @@ body {
   border-radius: 10px;
   border: none;
   font-size: 1rem;
+  cursor: pointer;
 }
 
 .btn_reset {
@@ -82,4 +83,5 @@ body {
   border-radius: 10px;
   border: none;
   font-size: 1rem;
+  cursor: pointer;
 }
