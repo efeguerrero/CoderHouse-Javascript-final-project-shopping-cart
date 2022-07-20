@@ -72,7 +72,7 @@ function buscarCantidad(sku) {
   return cantidadSku;
 }
 
-////////////////Función - Monto total Carrito/////////////////////////////////////////
+////////////////Función - Calcular monto total Carrito/////////////////////////////////////////
 
 function totalCarrito() {
   const total = carrito.reduce(
@@ -82,7 +82,7 @@ function totalCarrito() {
   return total;
 }
 
-//////////////// Función - Mostrar catalogo + Cantidad seleccionada para mostrar en Menu de opciones////////////////////////////////////////////
+//////////////// Función - Mostrar catalogo --> Armado de array con productos + Cantidad seleccionada para mostrar en Menu de opciones////////////////////////////////////////////
 //usar For Of al momento de ir a DOM?/////////
 function mostrarCatalogo() {
   const mostrarCatalogo = catalogo.map(
