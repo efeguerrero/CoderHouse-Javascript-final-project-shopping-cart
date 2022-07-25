@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////
 
 const catalogo = [
-  { id: 1, nombre: 'Alfombra Lisa 1x1', precio: 1500 },
+  { id: 1, nombre: 'Alfombra Lisa 1x1', precio: 1600 },
   { id: 2, nombre: 'Alfombra Trama 1x1', precio: 2300 },
   { id: 3, nombre: 'Alfombra Rayas 1x0.5', precio: 1500 },
   { id: 4, nombre: 'Alfombra Negra 2x2', precio: 3500 },
@@ -162,3 +162,29 @@ ${mostrarCatalogo().join('\n')}`);
       break;
   }
 } while (selector != 0 && selector != 9);
+
+///////////////////////////////////////////////
+////////////FUNCIONES MANIPULACIÓN DEL DOM////
+/////////////////////////////////////////////
+
+/////////////////Selección de nodos HTML/////////////////////////////////
+
+const productContainer = document.querySelector('.productContainer');
+
+////////////////Inserción HTML Catalogo///////////////////////////
+
+for (const producto of catalogo) {
+  const indivProduct = document.createElement('div');
+  indivProduct.classList.add('indivProduct');
+  indivProduct.innerHTML = `<label id="${producto.id}" class="indivProduct_name"
+              >${producto.nombre} - $${producto.precio}</label>
+            <input
+              type="number"
+              name="${producto.nombre}"
+              id="${producto.id}"
+              min="0"
+              class="indivProduct_quantity"
+              placeholder="0"
+            />`;
+  productContainer.appendChild(indivProduct);
+}
