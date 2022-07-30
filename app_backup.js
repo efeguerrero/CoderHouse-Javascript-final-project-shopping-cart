@@ -172,32 +172,85 @@ function mostrarCatalogo() {
 
 /////////////////Selección de elementos/////////////////////////////////
 
-const products_container = document.querySelector('.products_container');
+const productContainer = document.querySelector('.productContainer');
+const formContainer = document.querySelector('.formContainer');
+const montoTotal = document.querySelector('.monto');
+const btnComprar = document.querySelector('.btn_submit');
+const btnReset = document.querySelector('.btn_reset');
 
-////Lógica de Inserción de Productos del Catalogo//////
+////////////////Función - Inserción dinámica HTML del menu de productos desde el catalogo///////////////
 
-for (const producto of catalogo) {
-  const indiv_product = document.createElement('div');
-  indiv_product.classList.add('indiv_product');
-  indiv_product.innerHTML = `<div class="indiv_product_img_container">
-            <img
-              src="${producto.img_src}"
-              class="indiv_product_img"
-              alt="Product Image"
-            />
-          </div>
-          <div class="indiv_product_info">
-            <h2 class="indiv_product_title">${producto.nombre}</h2>
-            <h3 class="indiv_product_price">$${producto.precio}</h3>
-            <div class="indiv_product_buy" data-id="${producto.id}">
-              <img
-                src="./icons/add_shopping_cart_black_24dp.svg"
-                alt="Shopping Cart"
-                class="indiv_product_buy_img"
-              />
-              <span class="indiv_product_buy_text">Comprar</span>
-            </div>
-          </div>`;
+//creamos un id dinámico para el input de cada producto para saber luego cual estoy modificando cuando utilice el eventlistener.
 
-  products_container.appendChild(indiv_product);
+function insertarCatalogo() {
+  for (const producto of catalogo) {
+    const indivProduct = document.createElement('div');
+    indivProduct.classList.add('indivProduct');
+    indivProduct.innerHTML = `<label class="indivProduct_name"
+              >${producto.nombre} - $${producto.precio}</label>
+            <input
+              type="number"
+              name="${producto.nombre}"
+              id="${producto.id}"
+              min="0"
+              class="indivProduct_quantity" 
+              placeholder="0"
+            />`;
+
+    productContainer.appendChild(indivProduct);
+  }
 }
+
+window.addEventListener('DOMContentLoaded', function () {
+  if (JSON.parse(localStorage.getItem('carrito'))) {
+    carrito = JSON.parse(localStorage.getItem('carrito'));
+  }
+  insertarCatalogo();
+  insertarTotal();
+});
+
+/////////////// Función - Inserción dinámica HTML de Monto Total a Pagar por cliente////////////
+
+function insertarTotal() {
+  montoTotal.innerHTML = `Total a Pagar: $${totalCarrito()}`;
+}
+
+/////////////// Capturar [id] y [cantidad] del input del Menu de productos al modificarlo////////////
+
+//listener en contenedor del form para mediante burbujeo capturar en que input estoy realizando modificaciones. Con e.target identifico [input] que se modifico y tomo valores
+
+formContainer.addEventListener('input', function (e) {
+  //si el campo del input está vacío lo hago valer 0
+  if (!e.target.value) {
+    e.target.value == 0;
+  }
+  //Actualizo carrito según valores del input que modifique con id (sku) y cantidad.
+  actualizarCarrito(parseInt(e.target.id), parseInt(e.target.value));
+  //Llamo función para insertar valor total a pagar en HTML
+  insertarTotal();
+});
+
+////////////////Evento -  Finalización de Compra///////////////////////////
+
+btnComprar.addEventListener('click', function (e) {
+  e.preventDefault();
+  // revisamos si hay items en el carrito y cerramos la compra. Si se encuentra vacio devolvemos un error al usuario y volvemos al menu principal
+  if (carrito.length > 0) {
+    //Finalización de compra efectiva. Se muestra recibo final con productos y monto total.
+    alert(`Gracias por su compra!
+  Su total es de $${totalCarrito()}
+  Productos:
+  ${mostrarCatalogo().join('\n')}`);
+  } else {
+    alert(
+      'Su carrito está vacio. Por favor agregue items para finalizar su compra.'
+    );
+  }
+});
+
+////////////////Evento - Borrado de Carrito y Formulario///////////////////////////
+
+btnReset.addEventListener('click', function () {
+  borrarCarrito();
+  insertarTotal();
+});

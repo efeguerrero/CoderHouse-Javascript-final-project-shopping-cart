@@ -5,6 +5,16 @@
   top: 0;
   left: 0;
   background-color: rgba(170, 164, 164, 0.6);
+  transition: $Maintransition;
+  //tengo que quitar opacidad ya que el z-index no permite posicionarlo detras del body ya que es su parten. Z-index solo funciona con siblings
+  opacity: 0;
+  z-index: -1;
+}
+
+.cart_shadow_show {
+  opacity: 1;
+  transition: $Maintransition;
+  z-index: 100;
 }
 
 .cart_sidebar {
@@ -21,6 +31,13 @@
   //No va Justify-Conten para evitar que cuando crezca el DIV por tener más productos, crezca en ambas direcciones y parte quede afuera. De esta forma solo crece hacia abajo como lo haria normalmente
   padding: 4rem 1rem;
   overflow: auto;
+  transform: translateX(100%);
+  transition: $Maintransition;
+}
+
+.cart_sidebar_show {
+  transform: translateX(0%);
+  transition: $Maintransition;
 }
 
 .cart_close_icon {
