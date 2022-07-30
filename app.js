@@ -167,14 +167,43 @@ function mostrarCatalogo() {
 }
 
 ///////////////////////////////////////////////
+////////////NAVEGACIÓN////////////////////////
+/////////////////////////////////////////////
+
+//Selección de Elementos para Navegación
+
+const cart_shadow = document.querySelector('.cart_shadow');
+
+const cart_icon = document.querySelector('.navbar_cart_icon');
+
+const cart_close = document.querySelector('.cart_close_icon');
+
+const cart_siderbar = document.querySelector('.cart_sidebar');
+
+//Funciones para agregar/quitar clases para mostrar sidebar
+
+function mostrarCartito() {
+  cart_shadow.classList.toggle('cart_shadow_show');
+  cart_siderbar.classList.toggle('cart_sidebar_show');
+}
+
+//Eventos para agregar/quitar clases para mostrar sidebar
+
+cart_icon.addEventListener('click', function () {
+  mostrarCartito();
+});
+
+cart_close.addEventListener('click', function () {
+  mostrarCartito();
+});
+
+///////////////////////////////////////////////
 ////////////FUNCIONES MANIPULACIÓN DEL DOM////
 /////////////////////////////////////////////
 
-/////////////////Selección de elementos/////////////////////////////////
+////Lógica de Inserción de Productos del Catalogo//////
 
 const products_container = document.querySelector('.products_container');
-
-////Lógica de Inserción de Productos del Catalogo//////
 
 for (const producto of catalogo) {
   const indiv_product = document.createElement('div');
@@ -201,3 +230,19 @@ for (const producto of catalogo) {
 
   products_container.appendChild(indiv_product);
 }
+
+//////Lógica - Agregar Producto Al Carrito/////
+
+//Selecciono todos los botones de los productos
+
+const buy_btns = document.querySelectorAll('.indiv_product_buy');
+
+//Coloco dinamicamente un eventlistener en cada boton y en el clickeado ejecuto la función Actualizar Carrito con la cantidad 1
+
+buy_btns.forEach(function (btn) {
+  btn.addEventListener('click', function (e) {
+    const sku = e.currentTarget.getAttribute('data-id');
+    actualizarCarrito(sku, 1);
+    mostrarCartito();
+  });
+});
