@@ -117,7 +117,7 @@ function borrarCarrito() {
   localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
-//////////////// Función - Buscar Precio/Nombre desde el Catalogo según id de producto deseado////////////////
+//////////////// Función - Buscar Precio/Nombre/Img_src desde el Catalogo según id de producto deseado////////////////
 
 function buscarPrecio(sku) {
   const precioSku =
@@ -129,6 +129,12 @@ function buscarNombre(sku) {
   const nombreSku =
     catalogo[catalogo.findIndex((producto) => producto.id === sku)].nombre;
   return nombreSku;
+}
+
+function buscarImgsrc(sku) {
+  const imgsrc =
+    catalogo[catalogo.findIndex((producto) => producto.id === sku)].img_src;
+  return imgsrc;
 }
 
 //////////////////// Función -  Buscar cantidad de items en carrito según id de producto////////////
@@ -231,7 +237,7 @@ for (const producto of catalogo) {
   products_container.appendChild(indiv_product);
 }
 
-//////Lógica - Agregar Producto Al Carrito/////
+//////Lógica - Agregar Producto por primera vez al Carrito/////
 
 //Selecciono todos los botones de los productos
 
@@ -241,8 +247,46 @@ const buy_btns = document.querySelectorAll('.indiv_product_buy');
 
 buy_btns.forEach(function (btn) {
   btn.addEventListener('click', function (e) {
-    const sku = e.currentTarget.getAttribute('data-id');
+    //convertiro a nro el data id porque sino viene string!
+    const sku = parseInt(e.currentTarget.getAttribute('data-id'));
     actualizarCarrito(sku, 1);
+    insertarCarrito();
     mostrarCartito();
   });
 });
+
+//////// Inserción de Carrito en Sidebar//////////////////
+
+const cart_products_list = document.querySelector('.cart_products_list');
+
+function insertarCarrito() {
+  //Vacio primero container de carrito para no insertar sobre lo existente
+  cart_products_list.innerHTML = '';
+  for (const item of carrito) {
+    const cart_product = document.createElement('li');
+    cart_product.classList.add('cart_product');
+    cart_product.innerHTML = `<img
+                src="${buscarImgsrc(item.id)}"
+                alt=""
+                class="cart_product_img"
+              />
+              <div class="cart_product_info">
+                <h2 class="cart_product_name">${buscarNombre(item.id)}</h2>
+                <h2 class="cart_product_price">$${buscarPrecio(item.id)}</h2>
+              </div>
+              <div class="cart_product_inputContainer">
+                <img
+                  src="./icons/chevron_up_24dp.svg"
+                  alt=""
+                  class="cart_product_inputUp"
+                />
+                <h3 class="cart_product_input">1</h3>
+                <img
+                  src="./icons/chevron_down_24dp.svg"
+                  alt=""
+                  class="cart_product_inputDown"
+                />
+              </div>`;
+    cart_products_list.appendChild(cart_product);
+  }
+}
