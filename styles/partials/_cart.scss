@@ -1,0 +1,121 @@
+.cart_shadow {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(170, 164, 164, 0.6);
+}
+
+.cart_sidebar {
+  background-color: $white;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 75%;
+  max-width: 30rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //No va Justify-Conten para evitar que cuando crezca el DIV por tener más productos, crezca en ambas direcciones y parte quede afuera. De esta forma solo crece hacia abajo como lo haria normalmente
+  padding: 4rem 1rem;
+  overflow: auto;
+}
+
+.cart_close_icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  width: 1.8rem;
+}
+
+.cart_title {
+  font-size: 1.2rem;
+  padding: 0.5rem 0;
+}
+
+.cart_products {
+  // Hago que la parte de productos del carrito sea la única que pueda crecer y ocupar más espacio
+  flex-grow: 1;
+  width: 100%;
+  padding: 1rem 1rem;
+}
+
+.cart_total {
+  font-size: 1.4rem;
+  padding: 1rem 0;
+}
+
+.cart_btns {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 0.7rem;
+  &_buy {
+    border: none;
+    background-color: $sepia;
+    padding: 0.5rem;
+    color: $white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  &_reset {
+    @extend .cart_btns_buy;
+    background-color: grey;
+  }
+}
+
+//Cart Product Style inside sidebar
+
+.cart_products_list {
+  list-style: none;
+  width: 100%;
+}
+
+.cart_product {
+  display: flex;
+  align-items: center;
+  padding: 0.3rem 0;
+
+  &_img {
+    width: 2.5rem;
+    border-radius: 5px;
+  }
+
+  &_info {
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  &_name {
+    font-size: 0.8rem;
+    padding-bottom: 0.3rem;
+  }
+  &_price {
+    font-size: 0.8rem;
+  }
+  &_inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: auto;
+  }
+
+  &_input {
+    font-size: 0.8rem;
+    border: none;
+    text-align: center;
+    -webkit-appearance: none;
+    &Up {
+      cursor: pointer;
+    }
+    &Down {
+      cursor: pointer;
+    }
+  }
+}

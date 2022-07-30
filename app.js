@@ -3,10 +3,90 @@
 ///////////////////////////////////////////////
 
 const catalogo = [
-  { id: 1, nombre: 'Alfombra Lisa 1x1', precio: 1600 },
-  { id: 2, nombre: 'Alfombra Trama 1x1', precio: 2300 },
-  { id: 3, nombre: 'Alfombra Rayas 1x0.5', precio: 1500 },
-  { id: 4, nombre: 'Alfombra Negra 2x2', precio: 3500 },
+  {
+    id: 1,
+    nombre: 'Alfombra Circular al Telar',
+    precio: 2600,
+    img_src: './img/productos/item_1.jpeg',
+    categoria: 'Alfombras',
+  },
+  {
+    id: 2,
+    nombre: 'Alfombra Trama 2x1',
+    precio: 4300,
+    img_src: './img/productos/item_2.jpeg',
+    categoria: 'Alfombras',
+  },
+  {
+    id: 3,
+    nombre: 'Alfombra Hello 0.8x0.5',
+    precio: 1500,
+    img_src: './img/productos/item_3.jpeg',
+    categoria: 'Alfombras',
+  },
+  {
+    id: 4,
+    nombre: 'Alfombra Recepción Lisa 0.8x0.5',
+    precio: 1500,
+    img_src: './img/productos/item_4.jpeg',
+    categoria: 'Alfombras',
+  },
+  {
+    id: 5,
+    nombre: 'Mochila Blanca',
+    precio: 3500,
+    img_src: './img/productos/item_5.jpeg',
+    categoria: 'Mochilas',
+  },
+  {
+    id: 6,
+    nombre: 'Mochila Roja',
+    precio: 3500,
+    img_src: './img/productos/item_6.jpeg',
+    categoria: 'Mochilas',
+  },
+  {
+    id: 7,
+    nombre: 'Mochila Gris',
+    precio: 3500,
+    img_src: './img/productos/item_7.jpeg',
+    categoria: 'Mochilas',
+  },
+  {
+    id: 8,
+    nombre: 'Mochila Azul Oscuro',
+    precio: 3500,
+    img_src: './img/productos/item_8.jpeg',
+    categoria: 'Mochilas',
+  },
+  {
+    id: 9,
+    nombre: 'Mochila Azul y Marron',
+    precio: 3500,
+    img_src: './img/productos/item_9.jpeg',
+    categoria: 'Mochilas',
+  },
+  {
+    id: 10,
+    nombre: 'Bolso London',
+    precio: 7500,
+    img_src: './img/productos/item_10.jpeg',
+    categoria: 'Bolsos',
+  },
+  {
+    id: 11,
+    nombre: 'Tote Bag',
+    precio: 3500,
+    img_src: './img/productos/item_11.jpeg',
+    categoria: 'Carteras',
+  },
+  {
+    id: 12,
+    nombre: 'Sombrero Piluso',
+    precio: 2600,
+    img_src: './img/productos/item_12.jpeg',
+    categoria: 'Sombreros',
+  },
 ];
 
 let carrito = [];
@@ -25,18 +105,21 @@ function actualizarCarrito(sku, cantidad) {
   } else carrito.push({ id: sku, cantidad: cantidad });
   //Elimina del carrito items con cantidad 0
   carrito = carrito.filter((producto) => producto.cantidad > 0);
+  //Guardado del carrito en el Local Storage
+  localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
 ////////////////Función - Borrado total del carrito//////////////////
 
 function borrarCarrito() {
   carrito = [];
+  //Guardado del carrito en el Local Storage
+  localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
 //////////////// Función - Buscar Precio/Nombre desde el Catalogo según id de producto deseado////////////////
 
 function buscarPrecio(sku) {
-  console.log(typeof sku);
   const precioSku =
     catalogo[catalogo.findIndex((producto) => producto.id === sku)].precio;
   return precioSku;
@@ -95,25 +178,36 @@ const montoTotal = document.querySelector('.monto');
 const btnComprar = document.querySelector('.btn_submit');
 const btnReset = document.querySelector('.btn_reset');
 
-////////////////Inserción dinámica HTML del menu de productos desde el catalogo///////////////
+////////////////Función - Inserción dinámica HTML del menu de productos desde el catalogo///////////////
 
-//creamos un id dinámico para el input de cada producto para saber luego cual estoy modificando cuando utilice el eventlistener
+//creamos un id dinámico para el input de cada producto para saber luego cual estoy modificando cuando utilice el eventlistener.
 
-for (const producto of catalogo) {
-  const indivProduct = document.createElement('div');
-  indivProduct.classList.add('indivProduct');
-  indivProduct.innerHTML = `<label id="${producto.id}" class="indivProduct_name"
+function insertarCatalogo() {
+  for (const producto of catalogo) {
+    const indivProduct = document.createElement('div');
+    indivProduct.classList.add('indivProduct');
+    indivProduct.innerHTML = `<label class="indivProduct_name"
               >${producto.nombre} - $${producto.precio}</label>
             <input
               type="number"
               name="${producto.nombre}"
               id="${producto.id}"
               min="0"
-              class="indivProduct_quantity"
+              class="indivProduct_quantity" 
               placeholder="0"
             />`;
-  productContainer.appendChild(indivProduct);
+
+    productContainer.appendChild(indivProduct);
+  }
 }
+
+window.addEventListener('DOMContentLoaded', function () {
+  if (JSON.parse(localStorage.getItem('carrito'))) {
+    carrito = JSON.parse(localStorage.getItem('carrito'));
+  }
+  insertarCatalogo();
+  insertarTotal();
+});
 
 /////////////// Función - Inserción dinámica HTML de Monto Total a Pagar por cliente////////////
 

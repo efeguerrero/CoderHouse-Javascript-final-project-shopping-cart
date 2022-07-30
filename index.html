@@ -4,22 +4,119 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Simulador Carrito de Compras</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+    <title>Stefanos Lifestyle & Deco</title>
   </head>
   <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="navbar_center">
+        <img class="navbar_logo" src="./img/logos/logostefanos1.png" alt="" />
+        <div class="navbar_cart">
+          <div class="navbar_cart_counter">
+            <h2 class="navbar_cart_counter_text">1</h2>
+          </div>
+          <img
+            src="./icons/shopping_cart_black_24dp.svg"
+            alt=""
+            class="navbar_cart_icon"
+            navbar_cart_icon
+          />
+        </div>
+      </div>
+    </nav>
+    <!-- CART-SIDEBAR -->
+    <div class="cart_shadow">
+      <div class="cart_sidebar">
+        <img
+          src="./icons/close_black_24dp.svg"
+          alt=""
+          class="cart_close_icon"
+        />
+        <h2 class="cart_title">Carrito de Compras</h2>
+        <div class="cart_products">
+          <ul class="cart_products_list">
+            <li class="cart_product">
+              <img
+                src="./img/productos/item_1.jpeg"
+                alt=""
+                class="cart_product_img"
+              />
+              <div class="cart_product_info">
+                <h2 class="cart_product_name">Alfombra Circular al Telar</h2>
+                <h2 class="cart_product_price">$3500</h2>
+              </div>
+              <div class="cart_product_inputContainer">
+                <img
+                  src="./icons/chevron_up_24dp.svg"
+                  alt=""
+                  class="cart_product_inputUp"
+                />
+                <h3 class="cart_product_input">1</h3>
+                <img
+                  src="./icons/chevron_down_24dp.svg"
+                  alt=""
+                  class="cart_product_inputDown"
+                />
+              </div>
+            </li>
+          </ul>
+        </div>
+        <h2 class="cart_total">Total: $3500</h2>
+        <div class="cart_btns">
+          <button class="cart_btns_buy">Checkout</button>
+          <button class="cart_btns_reset">Borrar</button>
+        </div>
+      </div>
+    </div>
+    <!-- PRODUCTS -->
     <section class="mainContainer">
-      <h1 class="mainTitle">Tienda de Alfombras</h1>
-      <h2 class="subTitle">
-        Por favor elije los modelos de alfombras que desees.
-      </h2>
-      <h3 class="monto">Total a Pagar: $0</h3>
-      <form class="formContainer" action="">
-        <div class="productContainer"></div>
-        <input type="submit" class="btn_submit" value="Comprar" />
-        <input type="reset" class="btn_reset" value="Borrar" />
-      </form>
+      <h1 class="mainTitle">Lifestyle & Deco</h1>
+      <div class="products_container">
+        <div class="indiv_product">
+          <div class="indiv_product_img_container">
+            <img
+              src="./img/productos/item_3.jpeg"
+              class="indiv_product_img"
+              alt=""
+            />
+          </div>
+          <div class="indiv_product_info">
+            <h2 class="indiv_product_title">Alfombra Circular al Telar</h2>
+            <h3 class="indiv_product_price">$3.500</h3>
+            <div class="indiv_product_buy">
+              <img
+                src="./icons/add_shopping_cart_black_24dp.svg"
+                alt=""
+                class="indiv_product_buy_img"
+              />
+              <span class="indiv_product_buy_text">Comprar</span>
+            </div>
+          </div>
+        </div>
+        <div class="indiv_product">
+          <div class="indiv_product_img_container">
+            <img
+              src="./img/productos/item_6.jpeg"
+              class="indiv_product_img"
+              alt=""
+            />
+          </div>
+          <div class="indiv_product_info">
+            <h2 class="indiv_product_title">Alfombra Circular al Telar</h2>
+            <h3 class="indiv_product_price">$3.500</h3>
+            <div class="indiv_product_buy">
+              <img
+                src="./icons/add_shopping_cart_black_24dp.svg"
+                alt=""
+                class="indiv_product_buy_img"
+              />
+              <span class="indiv_product_buy_text">Comprar</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
-    <script src="app.js"></script>
+    <!-- <script src="app.js"></script> -->
   </body>
 </html>

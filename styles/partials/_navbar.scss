@@ -1,0 +1,48 @@
+.navbar {
+  background-color: $white;
+  height: 11vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // box-shadow: 0px 11px 15px -20px rgba(0, 0, 0, 80%);
+
+  &_center {
+    width: 90vw;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  &_logo {
+    width: 14rem;
+  }
+
+  &_cart {
+    margin-left: auto;
+    position: absolute;
+    left: 90%;
+    cursor: pointer;
+    &_icon {
+      display: block;
+      width: 2.5rem;
+    }
+    &_counter {
+      position: absolute;
+      top: -30%;
+      left: 55%;
+      background-color: $sepia;
+      color: $white;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &_text {
+        font-size: 1rem;
+      }
+    }
+  }
+}
