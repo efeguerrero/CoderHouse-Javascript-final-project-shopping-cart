@@ -95,12 +95,15 @@ let carrito = [];
 //////////////DEFINICIÓN DE FUNCIONES///////////
 ///////////////////////////////////////////////
 
-////////////////Función - Actualizar carrito (añadir y remover items) //////////////
+////////////////Función - Actualizar carrito (añadir y remover items) ////////////////
+
+//Si el item se encuentra en el carrito, a la cantidad ya existente le sumamos el nuevo input (hoy limitado a incrementos de a 1 )
+//Si el item no está en el carrito pusheamos id y cantidad
 
 function actualizarCarrito(sku, cantidad) {
-  //logica para saber si el item se encuentra en el carrito
+  //logica para saber si el item se encuentra en el carrito.
   if (carrito.find((producto) => sku === producto.id)) {
-    carrito[carrito.findIndex((producto) => producto.id === sku)].cantidad =
+    carrito[carrito.findIndex((producto) => producto.id === sku)].cantidad +=
       cantidad;
   } else carrito.push({ id: sku, cantidad: cantidad });
   //Elimina del carrito items con cantidad 0
@@ -148,7 +151,7 @@ function buscarCantidad(sku) {
   return cantidadSku;
 }
 
-////////////////Función - Calcular monto total Carrito/////////////////////////////////////////
+////////////////Función - Calcular monto total Carrito////////////////////////
 
 //Para cada item del carrito busco su precio en el catalogo mediante la función y luego multiplico por la cantidad total del carrito
 
@@ -167,18 +170,6 @@ function itemsEnCarrito() {
   return total;
 }
 
-//////////////// Función - Mostrar catalogo --> Armado de array con productos + Cantidad seleccionada para mostrar mediante un Join al finalizar la compra (SACAR EN PROXIMAS ENTREGAS)///////////////////////////////////////
-
-function mostrarCatalogo() {
-  const mostrarCatalogo = catalogo.map(
-    (item) =>
-      `${item.id}. ${item.nombre} - $${
-        item.precio
-      } - Cantidad seleccionada: ${buscarCantidad(item.id)}`
-  );
-  return mostrarCatalogo;
-}
-
 ///////////////////////////////////////////////
 ////////////NAVEGACIÓN////////////////////////
 /////////////////////////////////////////////
@@ -186,16 +177,13 @@ function mostrarCatalogo() {
 //Selección de Elementos para Navegación
 
 const cart_shadow = document.querySelector('.cart_shadow');
-
 const cart_icon = document.querySelector('.navbar_cart_icon');
-
 const cart_close = document.querySelector('.cart_close_icon');
-
 const cart_siderbar = document.querySelector('.cart_sidebar');
 
 //Funciones para agregar/quitar clases para mostrar sidebar con Carrito
 
-function mostrarCartito() {
+function mostrarCarrito() {
   cart_shadow.classList.toggle('cart_shadow_show');
   cart_siderbar.classList.toggle('cart_sidebar_show');
 }
@@ -203,20 +191,22 @@ function mostrarCartito() {
 //Eventos para agregar/quitar clases para mostrar sidebar
 
 cart_icon.addEventListener('click', function () {
-  mostrarCartito();
+  mostrarCarrito();
 });
 
 cart_close.addEventListener('click', function () {
-  mostrarCartito();
+  mostrarCarrito();
 });
 
-///////////////////////////////////////////////
-////////////FUNCIONES MANIPULACIÓN DEL DOM////
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////
+////////////FUNCIONES MANIPULACIÓN DEL DOM/////////////
+///////////////////////////////////////////////////////
 
-////Lógica de Inserción de Productos del Catalogo//////
+///////////////Lógica de Inserción de Productos del Catalogo///////////
 
 const products_container = document.querySelector('.products_container');
+
+//Asigno dinamicanete data-id = producto.id para despues identificar que producto estoy agregando al carrito con cada click
 
 for (const producto of catalogo) {
   const indiv_product = document.createElement('div');
@@ -252,6 +242,7 @@ function insertarCarrito() {
   //Vacio primero container de carrito para no insertar sobre lo existente
   //Luego inserto iterando sobre carrito con un for of e insertando dinamicanete lo items. En todos los tags agrego data-id=item.id para luego poder armar la opción de modificar las cantidades directamente en el carrito, identificando con esto que item estoy modificando.
   cart_products_list.innerHTML = '';
+
   for (const item of carrito) {
     const cart_product = document.createElement('li');
     cart_product.classList.add('cart_product');
@@ -294,7 +285,7 @@ function insertarCarrito() {
   cartCounter();
 }
 
-//////Lógica - Agregar Producto por primera vez al Carrito/////
+//////////Lógica - Agregar Producto por primera vez al Carrito/////////
 
 //Selecciono todos los botones de los productos
 
@@ -304,12 +295,11 @@ const buy_btns = document.querySelectorAll('.indiv_product_buy');
 
 buy_btns.forEach(function (btn) {
   btn.addEventListener('click', function (e) {
-    //convertiro a nro el data id porque sino viene string!
+    //convertiro a nro el data-id porque sino viene string!
     const sku = parseInt(e.currentTarget.getAttribute('data-id'));
-    let nuevaCantidad = buscarCantidad(sku) + 1;
-    actualizarCarrito(sku, nuevaCantidad);
+    actualizarCarrito(sku, 1);
     insertarCarrito();
-    mostrarCartito();
+    mostrarCarrito();
   });
 });
 
@@ -319,21 +309,19 @@ buy_btns.forEach(function (btn) {
 
 cart_products_list.addEventListener('click', function (e) {
   const sku = parseInt(e.target.getAttribute('data-id'));
-  let nuevaCantidad;
+  //Solo ejecuto funciones si el click se dá sobre los botones que contienen estas clases
   if (e.target.classList.contains('cart_product_inputUp')) {
-    nuevaCantidad = buscarCantidad(sku) + 1;
-    actualizarCarrito(sku, nuevaCantidad);
+    actualizarCarrito(sku, 1);
     insertarCarrito();
   } else {
     if (e.target.classList.contains('cart_product_inputDown')) {
-      nuevaCantidad = buscarCantidad(sku) - 1;
-      actualizarCarrito(sku, nuevaCantidad);
+      actualizarCarrito(sku, -1);
       insertarCarrito();
     }
   }
 });
 
-//////////////// Inserción de Monto Total de Carrito//////////////////
+//////////////// Inserción HTML del Monto Total de Carrito//////////////////
 
 const cart_total = document.querySelector('.cart_total');
 function insertarTotal() {
@@ -347,7 +335,8 @@ const cart_reset = document.querySelector('.cart_btns_reset');
 cart_reset.addEventListener('click', function () {
   borrarCarrito();
   insertarCarrito();
-  mostrarCartito();
+  //Cuando borro el carrito desde el mismo cierro el sidebar
+  mostrarCarrito();
 });
 
 ////////////////////// Finalización de Compra/////////////////////
@@ -364,12 +353,13 @@ checkout.addEventListener('click', function () {
     checkout_msg.innerHTML = ` Gracias por su compra!`;
     cart_siderbar.insertBefore(checkout_msg, cart_title);
   }
+  //Función a ejecutra luego de 2.5s para borrar el carrito y cerrar el sidebar una vez finalizada la compra
   setTimeout(function () {
     const checkout_msg = document.querySelector('.checkout_msg');
     checkout_msg.remove();
     borrarCarrito();
     insertarCarrito();
-    mostrarCartito();
+    mostrarCarrito();
   }, 2500);
 });
 
