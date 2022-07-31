@@ -333,14 +333,14 @@ cart_products_list.addEventListener('click', function (e) {
   }
 });
 
-//////////////// Inserción de Monto Total de Carrito/////////////
+//////////////// Inserción de Monto Total de Carrito//////////////////
 
 const cart_total = document.querySelector('.cart_total');
 function insertarTotal() {
   cart_total.innerHTML = `Total: $ ${totalCarrito()}`;
 }
 
-//////// Borrado del Carrito//////////
+/////////////////////// Borrado del Carrito//////////////////////
 
 const cart_reset = document.querySelector('.cart_btns_reset');
 
@@ -350,7 +350,7 @@ cart_reset.addEventListener('click', function () {
   mostrarCartito();
 });
 
-//////// Finalización de Compra////////
+////////////////////// Finalización de Compra/////////////////////
 
 const checkout = document.querySelector('.cart_btns_buy');
 const cart_title = document.querySelector('.cart_title');
@@ -373,7 +373,7 @@ checkout.addEventListener('click', function () {
   }, 2500);
 });
 
-//////////Inserción Contador de Productos en Carrito NavBar//////
+/////////////////Inserción Contador de Productos en Carrito NavBar/////////////////
 
 const cart_counter = document.querySelector('.navbar_cart_counter');
 
@@ -385,3 +385,14 @@ function cartCounter() {
     cart_counter.classList.remove('navbar_cart_counter_show');
   }
 }
+
+////////////// Carga de Local Storage al inicio de la aplicación///////////////////
+
+//Si cuando cargo la web hay items en el carrito, entonces asignar storage a carrito y ejecutar función de insertar carrito  que a su vez ejecuta cart counter y calcular monto total.
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (JSON.parse(localStorage.getItem('carrito')).length > 0) {
+    carrito = JSON.parse(localStorage.getItem('carrito'));
+    insertarCarrito();
+  }
+});
