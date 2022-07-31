@@ -48,6 +48,18 @@
   width: 1.8rem;
 }
 
+.checkout_msg {
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 0.6rem 0.3rem;
+  width: 80%;
+  text-align: center;
+  background-color: rgb(99, 149, 99);
+  color: $white;
+  border-radius: 5px;
+  letter-spacing: 0.1rem;
+}
+
 .cart_title {
   font-size: 1.2rem;
   padding: 0.5rem 0;

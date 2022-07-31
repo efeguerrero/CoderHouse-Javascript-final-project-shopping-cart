@@ -339,3 +339,26 @@ cart_reset.addEventListener('click', function () {
   insertarCarrito();
   mostrarCartito();
 });
+
+//////// Finalización de Compra////////
+
+const checkout = document.querySelector('.cart_btns_buy');
+const cart_title = document.querySelector('.cart_title');
+
+//Si hay items en el carrito doy mensaje de compra finalizada durante 2 segundos y luego borramos carrito y cerramos sidebar
+
+checkout.addEventListener('click', function () {
+  if (carrito.length > 0) {
+    const checkout_msg = document.createElement('h2');
+    checkout_msg.classList.add('checkout_msg');
+    checkout_msg.innerHTML = ` Gracias por su compra!`;
+    cart_siderbar.insertBefore(checkout_msg, cart_title);
+  }
+  setTimeout(function () {
+    const checkout_msg = document.querySelector('.checkout_msg');
+    checkout_msg.remove();
+    borrarCarrito();
+    insertarCarrito();
+    mostrarCartito();
+  }, 2000);
+});
