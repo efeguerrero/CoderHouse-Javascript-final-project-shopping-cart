@@ -300,13 +300,14 @@ function insertarCarrito() {
 
 const buy_btns = document.querySelectorAll('.indiv_product_buy');
 
-//Coloco dinamicamente un eventlistener en cada boton y en el clickeado ejecuto la función Actualizar Carrito con la cantidad 1
+//Coloco dinamicamente un eventlistener en cada boton y en el clickeado ejecuto la función Actualizar Carrito sumandolé uno a la cantidad que ya existia para ese id
 
 buy_btns.forEach(function (btn) {
   btn.addEventListener('click', function (e) {
     //convertiro a nro el data id porque sino viene string!
     const sku = parseInt(e.currentTarget.getAttribute('data-id'));
-    actualizarCarrito(sku, 1);
+    let nuevaCantidad = buscarCantidad(sku) + 1;
+    actualizarCarrito(sku, nuevaCantidad);
     insertarCarrito();
     mostrarCartito();
   });
