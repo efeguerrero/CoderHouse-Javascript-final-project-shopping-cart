@@ -4,7 +4,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  // box-shadow: 0px 11px 15px -20px rgba(0, 0, 0, 80%);
 
   &_center {
     width: 90vw;
@@ -16,7 +15,7 @@
   }
 
   &_logo {
-    width: 14rem;
+    width: 8rem;
   }
 
   &_cart {
@@ -26,7 +25,8 @@
     cursor: pointer;
     &_icon {
       display: block;
-      width: 2.5rem;
+      width: 2rem;
+      cursor: pointer;
     }
     &_counter {
       position: absolute;
@@ -46,6 +46,20 @@
       }
       &_text {
         font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .navbar {
+    &_logo {
+      width: 14rem;
+    }
+
+    &_cart {
+      &_icon {
+        width: 2.5rem;
       }
     }
   }

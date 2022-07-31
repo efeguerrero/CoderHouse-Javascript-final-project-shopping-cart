@@ -23,12 +23,12 @@
   right: 0;
   top: 0;
   height: 100vh;
-  width: 75%;
+  width: 85%;
   max-width: 30rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  //No va Justify-Conten para evitar que cuando crezca el DIV por tener más productos, crezca en ambas direcciones y parte quede afuera. De esta forma solo crece hacia abajo como lo haria normalmente
+  //No va Justify-Content para evitar que cuando crezca el DIV por tener más productos, crezca en ambas direcciones y parte quede afuera. De esta forma solo crece hacia abajo como lo haria normalmente
   padding: 4rem 1rem;
   overflow: auto;
   transform: translateX(100%);
@@ -74,6 +74,7 @@
 
 .cart_total {
   font-size: 1.4rem;
+  font-weight: 400;
   padding: 1rem 0;
 }
 
@@ -83,12 +84,14 @@
   width: 50%;
   gap: 0.7rem;
   &_buy {
+    font-size: 1rem;
     border: none;
     background-color: $sepia;
     padding: 0.5rem;
     color: $white;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: 300;
   }
   &_reset {
     @extend .cart_btns_buy;
@@ -121,11 +124,12 @@
   }
 
   &_name {
-    font-size: 0.8rem;
+    font-size: 1rem;
     padding-bottom: 0.3rem;
   }
   &_price {
-    font-size: 0.8rem;
+    font-size: 1rem;
+    font-weight: 500;
   }
   &_inputContainer {
     display: flex;
@@ -136,7 +140,7 @@
   }
 
   &_input {
-    font-size: 0.8rem;
+    font-size: 1rem;
     border: none;
     text-align: center;
     -webkit-appearance: none;

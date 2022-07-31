@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500&display=swap');
 
 /* Global Styles */
 
@@ -8,8 +8,9 @@
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
   font-weight: 400;
+  cursor: default;
 }
 
 body {
-  background-color: rgb(243, 233, 233);
+  background-color: white;
 }
