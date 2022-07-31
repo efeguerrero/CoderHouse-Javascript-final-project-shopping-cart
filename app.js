@@ -281,6 +281,7 @@ function insertarCarrito() {
               </div>`;
     cart_products_list.appendChild(cart_product);
   }
+  //Vuelvo a insertar monto total del carrito en cada inserción
   insertarTotal();
 }
 
@@ -328,3 +329,13 @@ const cart_total = document.querySelector('.cart_total');
 function insertarTotal() {
   cart_total.innerHTML = `Total: $ ${totalCarrito()}`;
 }
+
+//////// Borrado del Carrito//////////
+
+const cart_reset = document.querySelector('.cart_btns_reset');
+
+cart_reset.addEventListener('click', function () {
+  borrarCarrito();
+  insertarCarrito();
+  mostrarCartito();
+});
