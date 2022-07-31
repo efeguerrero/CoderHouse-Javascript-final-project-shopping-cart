@@ -44,9 +44,9 @@ body {
   width: 100%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (18rem)[auto-fit];
-      grid-template-columns: repeat(auto-fit, 18rem);
-  grid-auto-rows: 27rem;
+  -ms-grid-columns: (16rem)[auto-fit];
+      grid-template-columns: repeat(auto-fit, 16rem);
+  grid-auto-rows: 25rem;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
