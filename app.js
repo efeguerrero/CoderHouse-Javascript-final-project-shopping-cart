@@ -237,6 +237,53 @@ for (const producto of catalogo) {
   products_container.appendChild(indiv_product);
 }
 
+//////// Inserción de Carrito en Sidebar//////////////////
+
+const cart_products_list = document.querySelector('.cart_products_list');
+
+function insertarCarrito() {
+  //Vacio primero container de carrito para no insertar sobre lo existente
+  //Luego inserto iterando sobre carrito con un for of e insertando dinamicanete lo items. En todos los tags agrego data-id=item.id para luego poder armar la opción de modificar las cantidades directamente en el carrito, identificando con esto que item estoy modificando.
+  cart_products_list.innerHTML = '';
+  for (const item of carrito) {
+    const cart_product = document.createElement('li');
+    cart_product.classList.add('cart_product');
+    cart_product.innerHTML = `<img
+                src="${buscarImgsrc(item.id)}"
+                alt=""
+                class="cart_product_img"
+                data-id="${item.id}"
+              />
+              <div class="cart_product_info">
+                <h2 class="cart_product_name" data-id="${
+                  item.id
+                }">${buscarNombre(item.id)}</h2>
+                <h2 class="cart_product_price" data-id="${
+                  item.id
+                }">$${buscarPrecio(item.id)}</h2>
+              </div>
+              <div class="cart_product_inputContainer">
+                <img
+                  src="./icons/chevron_up_24dp.svg"
+                  alt=""
+                  class="cart_product_inputUp"
+                  data-id="${item.id}"
+                />
+                <h3 class="cart_product_input" data-id="${item.id}">${
+      item.cantidad
+    }</h3>
+                <img
+                  src="./icons/chevron_down_24dp.svg"
+                  alt=""
+                  class="cart_product_inputDown"
+                  data-id="${item.id}"
+                />
+              </div>`;
+    cart_products_list.appendChild(cart_product);
+  }
+  insertarTotal();
+}
+
 //////Lógica - Agregar Producto por primera vez al Carrito/////
 
 //Selecciono todos los botones de los productos
@@ -255,38 +302,29 @@ buy_btns.forEach(function (btn) {
   });
 });
 
-//////// Inserción de Carrito en Sidebar//////////////////
+////Modificacion de cantidades de producto desde Carrito/////////////
 
-const cart_products_list = document.querySelector('.cart_products_list');
+//Mediante delegación de eventos apliacda con un listener en el contenedor de la lista de productos en carrito, escucho por clicks en cada +/- de cada producto (identificado con el data-id) y según eso sumo o resto cantidades
 
-function insertarCarrito() {
-  //Vacio primero container de carrito para no insertar sobre lo existente
-  cart_products_list.innerHTML = '';
-  for (const item of carrito) {
-    const cart_product = document.createElement('li');
-    cart_product.classList.add('cart_product');
-    cart_product.innerHTML = `<img
-                src="${buscarImgsrc(item.id)}"
-                alt=""
-                class="cart_product_img"
-              />
-              <div class="cart_product_info">
-                <h2 class="cart_product_name">${buscarNombre(item.id)}</h2>
-                <h2 class="cart_product_price">$${buscarPrecio(item.id)}</h2>
-              </div>
-              <div class="cart_product_inputContainer">
-                <img
-                  src="./icons/chevron_up_24dp.svg"
-                  alt=""
-                  class="cart_product_inputUp"
-                />
-                <h3 class="cart_product_input">1</h3>
-                <img
-                  src="./icons/chevron_down_24dp.svg"
-                  alt=""
-                  class="cart_product_inputDown"
-                />
-              </div>`;
-    cart_products_list.appendChild(cart_product);
+cart_products_list.addEventListener('click', function (e) {
+  const sku = parseInt(e.target.getAttribute('data-id'));
+  let nuevaCantidad;
+  if (e.target.classList.contains('cart_product_inputUp')) {
+    nuevaCantidad = buscarCantidad(sku) + 1;
+    actualizarCarrito(sku, nuevaCantidad);
+    insertarCarrito();
+  } else {
+    if (e.target.classList.contains('cart_product_inputDown')) {
+      nuevaCantidad = buscarCantidad(sku) - 1;
+      actualizarCarrito(sku, nuevaCantidad);
+      insertarCarrito();
+    }
   }
+});
+
+//////////////// Inserción de Monto Total de Carrito/////////////
+
+const cart_total = document.querySelector('.cart_total');
+function insertarTotal() {
+  cart_total.innerHTML = `Total: $ ${totalCarrito()}`;
 }
