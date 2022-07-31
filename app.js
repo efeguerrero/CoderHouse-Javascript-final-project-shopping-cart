@@ -160,6 +160,13 @@ function totalCarrito() {
   return total;
 }
 
+////////////Función - Calcular cantidad de items en el carrito//////////////
+
+function itemsEnCarrito() {
+  const total = carrito.reduce((acc, item) => (acc += item.cantidad), 0);
+  return total;
+}
+
 //////////////// Función - Mostrar catalogo --> Armado de array con productos + Cantidad seleccionada para mostrar mediante un Join al finalizar la compra (SACAR EN PROXIMAS ENTREGAS)///////////////////////////////////////
 
 function mostrarCatalogo() {
@@ -186,7 +193,7 @@ const cart_close = document.querySelector('.cart_close_icon');
 
 const cart_siderbar = document.querySelector('.cart_sidebar');
 
-//Funciones para agregar/quitar clases para mostrar sidebar
+//Funciones para agregar/quitar clases para mostrar sidebar con Carrito
 
 function mostrarCartito() {
   cart_shadow.classList.toggle('cart_shadow_show');
@@ -283,6 +290,8 @@ function insertarCarrito() {
   }
   //Vuelvo a insertar monto total del carrito en cada inserción
   insertarTotal();
+  //Actualizo el counter de items que va al navbar
+  cartCounter();
 }
 
 //////Lógica - Agregar Producto por primera vez al Carrito/////
@@ -360,5 +369,18 @@ checkout.addEventListener('click', function () {
     borrarCarrito();
     insertarCarrito();
     mostrarCartito();
-  }, 2000);
+  }, 2500);
 });
+
+//////////Inserción Contador de Productos en Carrito NavBar//////
+
+const cart_counter = document.querySelector('.navbar_cart_counter');
+
+function cartCounter() {
+  if (itemsEnCarrito() > 0) {
+    cart_counter.classList.add('navbar_cart_counter_show');
+    cart_counter.innerHTML = `<h2 class="navbar_cart_counter_text">${itemsEnCarrito()}</h2>`;
+  } else {
+    cart_counter.classList.remove('navbar_cart_counter_show');
+  }
+}

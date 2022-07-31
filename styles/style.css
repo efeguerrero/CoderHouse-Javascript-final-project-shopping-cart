@@ -195,8 +195,8 @@ body {
   left: 55%;
   background-color: #936340;
   color: #ffffff;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -207,10 +207,15 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  opacity: 0;
+}
+
+.navbar_cart_counter_show {
+  opacity: 1;
 }
 
 .navbar_cart_counter_text {
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .cart_shadow {
