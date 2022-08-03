@@ -240,7 +240,7 @@ const cart_products_list = document.querySelector('.cart_products_list');
 
 function insertarCarrito() {
   //Vacio primero container de carrito para no insertar sobre lo existente
-  //Luego inserto iterando sobre carrito con un for of e insertando dinamicanete lo items. En todos los tags agrego data-id=item.id para luego poder armar la opción de modificar las cantidades directamente en el carrito, identificando con esto que item estoy modificando.
+  //Luego inserto iterando sobre carrito con un for of e insertando dinamicanete los items. En todos los tags agrego data-id=item.id para luego poder armar la opción de modificar las cantidades directamente en el carrito, identificando con esto que item estoy modificando.
   cart_products_list.innerHTML = '';
 
   for (const item of carrito) {
@@ -305,7 +305,7 @@ buy_btns.forEach(function (btn) {
 
 ////Modificacion de cantidades de producto desde Carrito/////////////
 
-//Mediante delegación de eventos apliacda con un listener en el contenedor de la lista de productos en carrito, escucho por clicks en cada +/- de cada producto (identificado con el data-id) y según eso sumo o resto cantidades
+//Mediante delegación de eventos aplicada con un listener en el contenedor de la lista de productos en carrito, escucho por clicks en cada +/- de cada producto (identificado con el data-id) y según eso sumo o resto cantidades
 
 cart_products_list.addEventListener('click', function (e) {
   const sku = parseInt(e.target.getAttribute('data-id'));
