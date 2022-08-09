@@ -478,4 +478,15 @@ body {
 .cart_product_inputDown {
   cursor: pointer;
 }
+
+.toast {
+  color: black;
+  background: white;
+  font-size: 0.8rem;
+}
+
+.toast-close {
+  color: black;
+  margin-left: 1rem;
+}
 /*# sourceMappingURL=style.css.map */

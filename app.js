@@ -312,7 +312,7 @@ buy_btns.forEach(function (btn) {
     const sku = parseInt(e.currentTarget.getAttribute('data-id'));
     actualizarCarrito(sku, 1);
     insertarCarrito();
-    mostrarCarrito();
+    notification(`${buscarNombre(sku)} agregado al carrito`);
   });
 });
 
@@ -398,3 +398,20 @@ document.addEventListener('DOMContentLoaded', function () {
   carrito = carritoStorage || [];
   insertarCarrito();
 });
+
+//////// Notificaciones para el Usuario//////////////
+
+function notification(msg) {
+  Toastify({
+    text: `${msg}`,
+    duration: 2000,
+    close: true,
+    gravity: 'top', // `top` or `bottom`
+    position: 'right', // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    className: 'toast',
+    onClick: function () {
+      mostrarCarrito();
+    },
+  }).showToast();
+}
