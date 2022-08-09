@@ -100,12 +100,25 @@ let carrito = [];
 //Si el item se encuentra en el carrito, a la cantidad ya existente le sumamos el nuevo input (hoy limitado a incrementos de a 1 )
 //Si el item no está en el carrito pusheamos id y cantidad
 
+// function actualizarCarrito(sku, cantidad) {
+//   //logica para saber si el item se encuentra en el carrito.
+//   if (carrito.find((producto) => sku === producto.id)) {
+//     carrito[carrito.findIndex((producto) => producto.id === sku)].cantidad +=
+//       cantidad;
+//   } else carrito.push({ id: sku, cantidad: cantidad });
+
+//   //Elimina del carrito items con cantidad 0
+//   carrito = carrito.filter((producto) => producto.cantidad > 0);
+//   //Guardado del carrito en el Local Storage
+//   localStorage.setItem('carrito', JSON.stringify(carrito));
+// }
+
 function actualizarCarrito(sku, cantidad) {
-  //logica para saber si el item se encuentra en el carrito.
-  if (carrito.find((producto) => sku === producto.id)) {
-    carrito[carrito.findIndex((producto) => producto.id === sku)].cantidad +=
-      cantidad;
-  } else carrito.push({ id: sku, cantidad: cantidad });
+  //logica para saber si el item se encuentra en el carrito y ejecutar según.
+  carrito.find((producto) => sku === producto.id)
+    ? (carrito[carrito.findIndex((producto) => producto.id === sku)].cantidad +=
+        cantidad)
+    : carrito.push({ id: sku, cantidad: cantidad });
   //Elimina del carrito items con cantidad 0
   carrito = carrito.filter((producto) => producto.cantidad > 0);
   //Guardado del carrito en el Local Storage
@@ -378,11 +391,10 @@ function cartCounter() {
 
 ////////////// Carga de Local Storage al inicio de la aplicación///////////////////
 
-//Si cuando cargo la web hay items en el carrito, entonces asignar storage a carrito y ejecutar función de insertar carrito  que a su vez ejecuta cart counter y calcular monto total.
+//Si cuando cargo la web hay items en el carrito, entonces asignar storage a carrito. Si no existe en storage ,carrito queda como array vación.
 
 document.addEventListener('DOMContentLoaded', function () {
-  if (JSON.parse(localStorage.getItem('carrito')).length > 0) {
-    carrito = JSON.parse(localStorage.getItem('carrito'));
-    insertarCarrito();
-  }
+  const carritoStorage = JSON.parse(localStorage.getItem('carrito'));
+  carrito = carritoStorage || [];
+  insertarCarrito();
 });
