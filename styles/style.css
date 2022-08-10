@@ -479,14 +479,23 @@ body {
   cursor: pointer;
 }
 
-.toast {
-  color: black;
-  background: white;
+.cartToast {
+  color: white;
+  background: #936340;
   font-size: 0.8rem;
+  padding: 1rem;
+  max-width: 80%;
 }
 
-.toast-close {
-  color: black;
-  margin-left: 1rem;
+.cartToast:hover {
+  opacity: 0.8;
+}
+
+.checkoutToast {
+  color: white;
+  padding: 1rem;
+  background: #936340;
+  font-size: 0.9rem;
+  max-width: 80%;
 }
 /*# sourceMappingURL=style.css.map */

@@ -1,10 +1,18 @@
-.toast {
-  color: black;
-  background: white;
+.cartToast {
+  color: white;
+  background: $sepia;
   font-size: 0.8rem;
+  padding: 1rem;
+  max-width: 80%;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
-.toast-close {
-  color: black;
-  margin-left: 1rem;
+.checkoutToast {
+  color: white;
+  padding: 1rem;
+  background: $sepia;
+  font-size: 0.9rem;
+  max-width: 80%;
 }

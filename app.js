@@ -233,7 +233,9 @@ for (const producto of catalogo) {
           </div>
           <div class="indiv_product_info">
             <h2 class="indiv_product_title">${producto.nombre}</h2>
-            <h3 class="indiv_product_price">$${producto.precio}</h3>
+            <h3 class="indiv_product_price">$${producto.precio.toLocaleString(
+              'es-AR'
+            )}</h3>
             <div class="indiv_product_buy" data-id="${producto.id}">
               <img
                 src="./icons/add_shopping_cart_black_24dp.svg"
@@ -271,7 +273,7 @@ function insertarCarrito() {
                 }">${buscarNombre(item.id)}</h2>
                 <h2 class="cart_product_price" data-id="${
                   item.id
-                }">$${buscarPrecio(item.id)}</h2>
+                }">$${buscarPrecio(item.id).toLocaleString('es-AR')}</h2>
               </div>
               <div class="cart_product_inputContainer">
                 <img
@@ -312,7 +314,7 @@ buy_btns.forEach(function (btn) {
     const sku = parseInt(e.currentTarget.getAttribute('data-id'));
     actualizarCarrito(sku, 1);
     insertarCarrito();
-    notification(`${buscarNombre(sku)} agregado al carrito`);
+    cartToast();
   });
 });
 
@@ -338,7 +340,7 @@ cart_products_list.addEventListener('click', function (e) {
 
 const cart_total = document.querySelector('.cart_total');
 function insertarTotal() {
-  cart_total.innerHTML = `Total: $ ${totalCarrito()}`;
+  cart_total.innerHTML = `Total: $ ${totalCarrito().toLocaleString('es-AR')}`;
 }
 
 /////////////////////// Borrado del Carrito//////////////////////
@@ -360,16 +362,10 @@ const cart_title = document.querySelector('.cart_title');
 //Si hay items en el carrito doy mensaje de compra finalizada durante 2 segundos y luego borramos carrito y cerramos sidebar
 
 checkout.addEventListener('click', function () {
-  if (carrito.length > 0) {
-    const checkout_msg = document.createElement('h2');
-    checkout_msg.classList.add('checkout_msg');
-    checkout_msg.innerHTML = ` Gracias por su compra!`;
-    cart_siderbar.insertBefore(checkout_msg, cart_title);
-  }
+  //Notificación al usuario con compra finalizada y mostrando el total gastado
+  checkoutToast(totalCarrito());
   //Función a ejecutra luego de 2.5s para borrar el carrito y cerrar el sidebar una vez finalizada la compra
   setTimeout(function () {
-    const checkout_msg = document.querySelector('.checkout_msg');
-    checkout_msg.remove();
     borrarCarrito();
     insertarCarrito();
     mostrarCarrito();
@@ -399,19 +395,37 @@ document.addEventListener('DOMContentLoaded', function () {
   insertarCarrito();
 });
 
+/////////////////////////////////////////////////////
 //////// Notificaciones para el Usuario//////////////
+/////////////////////////////////////////////////////
 
-function notification(msg) {
+/////////Toast para item en cart////////////////////
+
+function cartToast() {
   Toastify({
-    text: `${msg}`,
+    text: `Item agregado al carrito`,
     duration: 2000,
-    close: true,
     gravity: 'top', // `top` or `bottom`
     position: 'right', // `left`, `center` or `right`
     stopOnFocus: true, // Prevents dismissing of toast on hover
-    className: 'toast',
+    className: 'cartToast',
     onClick: function () {
       mostrarCarrito();
     },
+  }).showToast();
+}
+
+///////////Toast para CheckOut////////////////////////////////
+
+function checkoutToast(total) {
+  Toastify({
+    text: `Gracias por su compra! Su total ha sido de $${total.toLocaleString(
+      'es-AR'
+    )}`,
+    duration: 3500,
+    gravity: 'top', // `top` or `bottom`
+    position: 'right', // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    className: 'checkoutToast',
   }).showToast();
 }
