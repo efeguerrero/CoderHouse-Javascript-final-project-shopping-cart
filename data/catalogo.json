@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "nombre": "Alfombra Circular al Telar",
+    "precio": 2700,
+    "img_src": "./img/productos/item_1.jpeg",
+    "categoria": "Alfombras"
+  },
+  {
+    "id": 2,
+    "nombre": "Alfombra Trama 2x1",
+    "precio": 4300,
+    "img_src": "./img/productos/item_2.jpeg",
+    "categoria": "Alfombras"
+  },
+  {
+    "id": 3,
+    "nombre": "Alfombra Hello 0.8x0.5",
+    "precio": 1500,
+    "img_src": "./img/productos/item_3.jpeg",
+    "categoria": "Alfombras"
+  },
+  {
+    "id": 4,
+    "nombre": "Alfombra Recepción Lisa 0.8x0.5",
+    "precio": 1500,
+    "img_src": "./img/productos/item_4.jpeg",
+    "categoria": "Alfombras"
+  },
+  {
+    "id": 5,
+    "nombre": "Mochila Blanca",
+    "precio": 3500,
+    "img_src": "./img/productos/item_5.jpeg",
+    "categoria": "Mochilas"
+  },
+  {
+    "id": 6,
+    "nombre": "Mochila Roja",
+    "precio": 3500,
+    "img_src": "./img/productos/item_6.jpeg",
+    "categoria": "Mochilas"
+  },
+  {
+    "id": 7,
+    "nombre": "Mochila Gris",
+    "precio": 3500,
+    "img_src": "./img/productos/item_7.jpeg",
+    "categoria": "Mochilas"
+  },
+  {
+    "id": 8,
+    "nombre": "Mochila Azul Oscuro",
+    "precio": 3500,
+    "img_src": "./img/productos/item_8.jpeg",
+    "categoria": "Mochilas"
+  },
+  {
+    "id": 9,
+    "nombre": "Mochila Azul y Marron",
+    "precio": 3500,
+    "img_src": "./img/productos/item_9.jpeg",
+    "categoria": "Mochilas"
+  },
+  {
+    "id": 10,
+    "nombre": "Bolso London",
+    "precio": 7500,
+    "img_src": "./img/productos/item_10.jpeg",
+    "categoria": "Bolsos"
+  },
+  {
+    "id": 11,
+    "nombre": "Tote Bag",
+    "precio": 3500,
+    "img_src": "./img/productos/item_11.jpeg",
+    "categoria": "Carteras"
+  },
+  {
+    "id": 12,
+    "nombre": "Sombrero Piluso",
+    "precio": 2600,
+    "img_src": "./img/productos/item_12.jpeg",
+    "categoria": "Sombreros"
+  }
+]

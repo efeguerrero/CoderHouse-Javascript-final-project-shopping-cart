@@ -2,116 +2,18 @@
 //////////////DEFINICIÓN DE VARIABLES///////////
 ///////////////////////////////////////////////
 
-const catalogo = [
-  {
-    id: 1,
-    nombre: 'Alfombra Circular al Telar',
-    precio: 2600,
-    img_src: './img/productos/item_1.jpeg',
-    categoria: 'Alfombras',
-  },
-  {
-    id: 2,
-    nombre: 'Alfombra Trama 2x1',
-    precio: 4300,
-    img_src: './img/productos/item_2.jpeg',
-    categoria: 'Alfombras',
-  },
-  {
-    id: 3,
-    nombre: 'Alfombra Hello 0.8x0.5',
-    precio: 1500,
-    img_src: './img/productos/item_3.jpeg',
-    categoria: 'Alfombras',
-  },
-  {
-    id: 4,
-    nombre: 'Alfombra Recepción Lisa 0.8x0.5',
-    precio: 1500,
-    img_src: './img/productos/item_4.jpeg',
-    categoria: 'Alfombras',
-  },
-  {
-    id: 5,
-    nombre: 'Mochila Blanca',
-    precio: 3500,
-    img_src: './img/productos/item_5.jpeg',
-    categoria: 'Mochilas',
-  },
-  {
-    id: 6,
-    nombre: 'Mochila Roja',
-    precio: 3500,
-    img_src: './img/productos/item_6.jpeg',
-    categoria: 'Mochilas',
-  },
-  {
-    id: 7,
-    nombre: 'Mochila Gris',
-    precio: 3500,
-    img_src: './img/productos/item_7.jpeg',
-    categoria: 'Mochilas',
-  },
-  {
-    id: 8,
-    nombre: 'Mochila Azul Oscuro',
-    precio: 3500,
-    img_src: './img/productos/item_8.jpeg',
-    categoria: 'Mochilas',
-  },
-  {
-    id: 9,
-    nombre: 'Mochila Azul y Marron',
-    precio: 3500,
-    img_src: './img/productos/item_9.jpeg',
-    categoria: 'Mochilas',
-  },
-  {
-    id: 10,
-    nombre: 'Bolso London',
-    precio: 7500,
-    img_src: './img/productos/item_10.jpeg',
-    categoria: 'Bolsos',
-  },
-  {
-    id: 11,
-    nombre: 'Tote Bag',
-    precio: 3500,
-    img_src: './img/productos/item_11.jpeg',
-    categoria: 'Carteras',
-  },
-  {
-    id: 12,
-    nombre: 'Sombrero Piluso',
-    precio: 2600,
-    img_src: './img/productos/item_12.jpeg',
-    categoria: 'Sombreros',
-  },
-];
+let catalogo = [];
 
 let carrito = [];
 
-/////////////////////////////////////////////////
-//////////////DEFINICIÓN DE FUNCIONES///////////
-///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+//////////////DEFINICIÓN DE FUNCIONES DE LÓGICA DE CARRITO/CATALOGO///////////
+/////////////////////////////////////////////////////////////////////////////
 
 ////////////////Función - Actualizar carrito (añadir y remover items) ////////////////
 
 //Si el item se encuentra en el carrito, a la cantidad ya existente le sumamos el nuevo input (hoy limitado a incrementos de a 1 )
 //Si el item no está en el carrito pusheamos id y cantidad
-
-// function actualizarCarrito(sku, cantidad) {
-//   //logica para saber si el item se encuentra en el carrito.
-//   if (carrito.find((producto) => sku === producto.id)) {
-//     carrito[carrito.findIndex((producto) => producto.id === sku)].cantidad +=
-//       cantidad;
-//   } else carrito.push({ id: sku, cantidad: cantidad });
-
-//   //Elimina del carrito items con cantidad 0
-//   carrito = carrito.filter((producto) => producto.cantidad > 0);
-//   //Guardado del carrito en el Local Storage
-//   localStorage.setItem('carrito', JSON.stringify(carrito));
-// }
 
 function actualizarCarrito(sku, cantidad) {
   //logica para saber si el item se encuentra en el carrito y ejecutar según.
@@ -183,9 +85,9 @@ function itemsEnCarrito() {
   return total;
 }
 
-///////////////////////////////////////////////
-////////////NAVEGACIÓN////////////////////////
-/////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////NAVEGACIÓN - MOSTRAR Y CERRAR CARRITO EN SIDEBAR////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
 
 //Selección de Elementos para Navegación
 
@@ -211,9 +113,28 @@ cart_close.addEventListener('click', function () {
   mostrarCarrito();
 });
 
+////////////////////////////////////////////////////////////////////////////
+////////////CARGA DE DATA EXTERNA (archivo local JSON)//////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+async function cargarCatalogo() {
+  const response = await fetch('./data/catalogo.json');
+  catalogo = await response.json();
+}
+
 ///////////////////////////////////////////////////////
 ////////////FUNCIONES MANIPULACIÓN DEL DOM/////////////
 ///////////////////////////////////////////////////////
+
+////////////////Carga Inicial de Web y datos - Catalogo desde API - Insertar Catalogo en HTML - Carrito desde Local Storage///////////////
+
+//Para asegurar la carga del catalogo antes de la inserción tengo que usar async/await (por más que la función cargarCatalogo losea) porque sino se ejecuta insertarCatalogo antes de que se llegue a cargar y la inserción queda vacia.
+
+window.addEventListener('DOMContentLoaded', async () => {
+  await cargarCatalogo();
+  insertarCatalogo();
+  carritoStorage();
+});
 
 ///////////////Lógica de Inserción de Productos del Catalogo///////////
 
@@ -221,10 +142,11 @@ const products_container = document.querySelector('.products_container');
 
 //Asigno dinamicanete data-id = producto.id para despues identificar que producto estoy agregando al carrito con cada click
 
-for (const producto of catalogo) {
-  const indiv_product = document.createElement('div');
-  indiv_product.classList.add('indiv_product');
-  indiv_product.innerHTML = `<div class="indiv_product_img_container">
+function insertarCatalogo() {
+  for (const producto of catalogo) {
+    const indiv_product = document.createElement('div');
+    indiv_product.classList.add('indiv_product');
+    indiv_product.innerHTML = `<div class="indiv_product_img_container">
             <img
               src="${producto.img_src}"
               class="indiv_product_img"
@@ -246,9 +168,9 @@ for (const producto of catalogo) {
             </div>
           </div>`;
 
-  products_container.appendChild(indiv_product);
+    products_container.appendChild(indiv_product);
+  }
 }
-
 //////// Inserción de Carrito en Sidebar//////////////////
 
 const cart_products_list = document.querySelector('.cart_products_list');
@@ -300,25 +222,27 @@ function insertarCarrito() {
   cartCounter();
 }
 
-//////////Lógica - Agregar Producto por primera vez al Carrito/////////
+//////////Lógica - Agregar Producto desde vista de Catalogo/////////
 
-//Selecciono todos los botones de los productos
+//Al insertar el catalogo con info traida con fetch y el DOMContentLoaded no puedo seleccionar los btns insertados porque el nodelist viene vacio. Uso delegación de eventos para buscar clicks en products_container y solo tomar en cuenta aquellos hechos sobre el boton. En caso de hacer click en el icono o texto del boton, targeteo el parentNode para tener la funcionalidad correcta
 
-const buy_btns = document.querySelectorAll('.indiv_product_buy');
-
-//Coloco dinamicamente un eventlistener en cada boton y en el clickeado ejecuto la función Actualizar Carrito sumandolé uno a la cantidad que ya existia para ese id
-
-buy_btns.forEach(function (btn) {
-  btn.addEventListener('click', function (e) {
-    //convertiro a nro el data-id porque sino viene string!
-    const sku = parseInt(e.currentTarget.getAttribute('data-id'));
+products_container.addEventListener('click', (e) => {
+  //Solo ejecuta si el click es hecho sobre el boton o sobre el icono/texto dentro del boton
+  if (
+    e.target.classList.contains('indiv_product_buy') ||
+    e.target.parentNode.classList.contains('indiv_product_buy')
+  ) {
+    //Sku se asigna con un operador [OR] según si hice click en el boton o sobre algun child
+    const sku =
+      parseInt(e.target.getAttribute('data-id')) ||
+      parseInt(e.target.parentNode.getAttribute('data-id'));
     actualizarCarrito(sku, 1);
     insertarCarrito();
     cartToast();
-  });
+  }
 });
 
-////Modificacion de cantidades de producto desde Carrito/////////////
+/////////////////////Modificacion de cantidades de producto desde Carrito///////////////////
 
 //Mediante delegación de eventos aplicada con un listener en el contenedor de la lista de productos en carrito, escucho por clicks en cada +/- de cada producto (identificado con el data-id) y según eso sumo o resto cantidades
 
@@ -389,14 +313,14 @@ function cartCounter() {
 
 //Si cuando cargo la web hay items en el carrito, entonces asignar storage a carrito. Si no existe en storage ,carrito queda como array vación.
 
-document.addEventListener('DOMContentLoaded', function () {
+function carritoStorage() {
   const carritoStorage = JSON.parse(localStorage.getItem('carrito'));
   carrito = carritoStorage || [];
   insertarCarrito();
-});
+}
 
 /////////////////////////////////////////////////////
-//////// Notificaciones para el Usuario//////////////
+//////// NOTIFICACIONES PARA EL USUARIO//////////////
 /////////////////////////////////////////////////////
 
 /////////Toast para item en cart////////////////////
