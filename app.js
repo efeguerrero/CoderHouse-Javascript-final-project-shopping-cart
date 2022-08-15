@@ -1,6 +1,6 @@
-/////////////////////////////////////////////////
-//////////////DEFINICIÓN DE VARIABLES///////////
-///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+//////////////DEFINICIÓN DE VARIABLES////////////////////////
+/////////////////////////////////////////////////////////////
 
 let catalogo = [];
 
@@ -224,10 +224,10 @@ function insertarCarrito() {
 
 //////////Lógica - Agregar Producto desde vista de Catalogo/////////
 
-//Al insertar el catalogo con info traida con fetch y el DOMContentLoaded no puedo seleccionar los btns insertados porque el nodelist viene vacio. Uso delegación de eventos para buscar clicks en products_container y solo tomar en cuenta aquellos hechos sobre el boton. En caso de hacer click en el icono o texto del boton, targeteo el parentNode para tener la funcionalidad correcta
+//Al insertar el catalogo con info traida con fetch y el DOMContentLoaded no puedo seleccionar los btns insertados porque el nodelist viene vacio. Uso delegación de eventos para buscar clicks en products_container y solo tomar en cuenta aquellos hechos sobre el boton. En caso de hacer click en el icono o texto del boton, targeteo el parentNode para tener la funcionalidad correcta.
 
 products_container.addEventListener('click', (e) => {
-  //Solo ejecuta si el click es hecho sobre el boton o sobre el icono/texto dentro del boton
+  //Solo ejecuto si el click es hecho sobre el boton o sobre el icono/texto dentro del boton
   if (
     e.target.classList.contains('indiv_product_buy') ||
     e.target.parentNode.classList.contains('indiv_product_buy')
