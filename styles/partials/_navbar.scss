@@ -1,6 +1,6 @@
 .navbar {
   background-color: $white;
-  height: 11vh;
+  height: 9vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,8 +10,7 @@
     background-color: transparent;
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: relative;
+    justify-content: space-between;
   }
 
   &_logo {
@@ -19,9 +18,7 @@
   }
 
   &_cart {
-    margin-left: auto;
-    position: absolute;
-    left: 90%;
+    position: relative;
     cursor: pointer;
     &_icon {
       display: block;
@@ -47,6 +44,14 @@
       &_text {
         font-size: 0.8rem;
       }
+    }
+  }
+  &_menu {
+    width: 1.7rem;
+    cursor: pointer;
+    &Icon {
+      width: 100%;
+      cursor: pointer;
     }
   }
 }

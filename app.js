@@ -86,8 +86,10 @@ function itemsEnCarrito() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-////////////NAVEGACIÓN - MOSTRAR Y CERRAR CARRITO EN SIDEBAR////////////////////////
+////////////NAVEGACIÓN ////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
+
+///////////////MOSTRAR Y CERRAR CARRITO EN SIDEBAR////////////
 
 //Selección de Elementos para Navegación
 
@@ -111,6 +113,26 @@ cart_icon.addEventListener('click', function () {
 
 cart_close.addEventListener('click', function () {
   mostrarCarrito();
+});
+
+//////////////MOSTRAR Y CERRAR MENU DE FILTROS///////////////////
+
+//Selección de Elementos
+
+const menuIcon = document.querySelector('.navbar_menu');
+const filterContainer = document.querySelector('.filtersContainer');
+
+//Funciones para agregar/quitar clases para mostrar Menu de Filtrado
+
+function mostrarMenu() {
+  filterContainer.classList.toggle('filtersContainer_show');
+}
+
+//Eventos para agregar/quitar clases para mostrar sidebar
+
+menuIcon.addEventListener('click', function () {
+  mostrarMenu();
+  console.log('Click');
 });
 
 ////////////////////////////////////////////////////////////////////////////

@@ -17,6 +17,9 @@
     <!-- NAVBAR -->
     <nav class="navbar">
       <div class="navbar_center">
+        <div class="navbar_menu">
+          <img class="navbar_menuIcon" src="./icons/menuicon.svg" alt="" />
+        </div>
         <img class="navbar_logo" src="./img/logos/logostefanos1.png" alt="" />
         <div class="navbar_cart">
           <div class="navbar_cart_counter"></div>
@@ -54,8 +57,30 @@
       <img class="mainHeader_img" src="./img/header_background.jpeg" alt="" />
       <h1 class="mainTitle">Lifestyle & Deco</h1>
     </div>
-    <!-- PRODUCTS -->
+    <!-- MAIN VIEW -->
     <section class="mainContainer">
+      <!-- FILTERS -->
+      <div class="filter_shadow"></div>
+      <div class="filtersContainer">
+        <form action="" class="filterForm">
+          <input
+            class="filterSearch"
+            type="search"
+            name="search"
+            placeholder="Buscar..."
+            id=""
+          />
+        </form>
+        <div class="filterCategoria">
+          <h3 class="filterTitle">Categorias</h3>
+          <button class="filterCategoria_indiv">Alfombras</button>
+          <button class="filterCategoria_indiv">Mochilas</button>
+          <button class="filterCategoria_indiv">Carteras</button>
+          <button class="filterCategoria_indiv">Sombreros</button>
+          <button class="filterCategoria_indiv">Bolsos</button>
+        </div>
+      </div>
+      <!-- PRODUCTS -->
       <div class="products_container"></div>
     </section>
     <!-- toastify-js -->

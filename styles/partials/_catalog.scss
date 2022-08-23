@@ -1,13 +1,5 @@
 /* main Containers & Title*/
 
-.mainContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 2rem auto;
-  max-width: 80vw;
-}
-
 .mainHeader {
   position: relative;
   display: flex;
@@ -34,6 +26,14 @@
   background-color: rgba(0, 0, 0, 0.45);
   padding: 1rem;
   width: max-content;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  max-width: 80vw;
 }
 
 /*Product Container Style*/
