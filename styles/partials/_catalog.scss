@@ -9,7 +9,7 @@
   &_img {
     width: 100%;
   }
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
 }
 
 .mainTitle {
@@ -46,6 +46,7 @@
   justify-content: center;
   column-gap: 7rem;
   row-gap: 4rem;
+  padding: 2rem 0;
 }
 
 ///*Individual Product Style*////
@@ -124,6 +125,12 @@
 //////////////Media Queries////////////////////
 
 @media screen and (min-width: 768px) {
+  .mainContainer {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
   .mainHeader {
     width: 100vw;
     position: relative;
@@ -137,10 +144,21 @@
     font-weight: 200;
     padding: 1.5rem;
   }
+
+  .products_container {
+    //Hay que cambiar al configuración de las columnas del grid para que pueda quedar todo centrado. Hardcodear el 16rem para el ancho de las columnas me distorsiona el centrado
+    width: 100%;
+    grid-template-columns: repeat(2, 16rem);
+  }
 }
 
 @media screen and (min-width: 1024px) {
   .mainTitle {
     font-size: 4rem;
+  }
+  .products_container {
+    //Hay que cambiar al configuración de las columnas del grid para que pueda quedar todo centrado. Hardcodear el 16rem para el ancho de las columnas me distorsiona el centrado
+
+    grid-template-columns: repeat(3, 16rem);
   }
 }

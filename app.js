@@ -103,6 +103,8 @@ const cart_siderbar = document.querySelector('.cart_sidebar');
 function mostrarCarrito() {
   cart_shadow.classList.toggle('cart_shadow_show');
   cart_siderbar.classList.toggle('cart_sidebar_show');
+  //Cuando se abre sideBar no permitimos scroll
+  document.body.classList.toggle('no_scroll');
 }
 
 //Eventos para agregar/quitar clases para mostrar sidebar
@@ -119,20 +121,28 @@ cart_close.addEventListener('click', function () {
 
 //Selección de Elementos
 
+const filter_shadow = document.querySelector('.filter_shadow');
 const menuIcon = document.querySelector('.navbar_menu');
 const filterContainer = document.querySelector('.filtersContainer');
+const filter_close = document.querySelector('.filtersContainer_close');
 
 //Funciones para agregar/quitar clases para mostrar Menu de Filtrado
 
 function mostrarMenu() {
   filterContainer.classList.toggle('filtersContainer_show');
+  filter_shadow.classList.toggle('filter_shadow_show');
+  //Cuando se abre sideBar no permitimos scroll
+  document.body.classList.toggle('no_scroll');
 }
 
 //Eventos para agregar/quitar clases para mostrar sidebar
 
 menuIcon.addEventListener('click', function () {
   mostrarMenu();
-  console.log('Click');
+});
+
+filter_close.addEventListener('click', function () {
+  mostrarMenu();
 });
 
 ////////////////////////////////////////////////////////////////////////////

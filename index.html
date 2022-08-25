@@ -62,22 +62,28 @@
       <!-- FILTERS -->
       <div class="filter_shadow"></div>
       <div class="filtersContainer">
-        <form action="" class="filterForm">
-          <input
-            class="filterSearch"
-            type="search"
-            name="search"
-            placeholder="Buscar..."
-            id=""
-          />
-        </form>
+                <img
+          src="./icons/close_black_24dp.svg"
+          alt=""
+          class="filtersContainer_close"
+        />
         <div class="filterCategoria">
           <h3 class="filterTitle">Categorias</h3>
+          <button class="filterCategoria_indiv">Todas</button>
           <button class="filterCategoria_indiv">Alfombras</button>
           <button class="filterCategoria_indiv">Mochilas</button>
           <button class="filterCategoria_indiv">Carteras</button>
           <button class="filterCategoria_indiv">Sombreros</button>
           <button class="filterCategoria_indiv">Bolsos</button>
+        </div>
+        <form action="" class="filterForm_price">
+          <div class="filterPrice">
+          <h3 class="filterPrice_title">Precio Máximo</h3>
+          <div class="filterPrice_rangeContainer">
+          <input type="range" min="0" name="price" class="filterPrice_bar" id="" />
+          <span class="filterPrice_value">$3500</span>
+          </div>
+        </form>
         </div>
       </div>
       <!-- PRODUCTS -->
