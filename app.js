@@ -6,8 +6,6 @@ let catalogo = [];
 
 let carrito = [];
 
-let catalogoFiltrado = [];
-
 //////////////////////////////////////////////////////////////////////////////
 //////////////DEFINICIÓN DE FUNCIONES DE LÓGICA DE CARRITO/CATALOGO///////////
 /////////////////////////////////////////////////////////////////////////////
@@ -154,7 +152,6 @@ filter_close.addEventListener('click', function () {
 async function cargarCatalogo() {
   const response = await fetch('./data/catalogo.json');
   catalogo = await response.json();
-  catalogoFiltrado = [...catalogo];
 }
 
 ///////////////////////////////////////////////////////
@@ -170,6 +167,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   insertarCatalogo(catalogo);
   carritoStorage();
   crearFiltros();
+  rangoPrecios();
 });
 
 ///////////////Lógica de Inserción de Productos del Catalogo///////////
@@ -361,7 +359,7 @@ function carritoStorage() {
   insertarCarrito();
 }
 
-////////////// Insecrión de Categorias de Filtros de Producto///////////////
+////////////// Creación e Insecrión de Filtros de Categorias de Producto///////////////
 
 //A partir del catalogo creamos un array de las categorias, sin repetir, para luego insertarlo
 
@@ -388,24 +386,65 @@ function insertarFiltros(array) {
   }
 }
 
-////////////////// Funcionalidad de Filtrado por Categoria/////////////////////
+//////////////// Rango de slider de precios de productos////////////////////////
 
-//Evento para filtrar Categoria
+//Calculo el precio maximo dentro de mi catalogo para establecer el final del rango y luego agrego el atributo al slider como max y valor por defecto
+
+const rangoPrecio = document.querySelector('.filterPrice_bar');
+const filterPrice_value = document.querySelector('.filterPrice_value');
+
+function rangoPrecios() {
+  const precioMax = Math.max(...catalogo.map((item) => item.precio));
+  rangoPrecio.setAttribute('max', `${precioMax}`);
+  rangoPrecio.setAttribute('value', `${precioMax}`);
+  filterPrice_value.innerText = `$${precioMax.toLocaleString('es-AR')}`;
+  return precioMax;
+}
+
+/////////////// Selección de Filtros de Categoria y Precio///////////////////
+
+//Evento para filtrar Categoria. Escucho por delegación de eventos los clicks en botones y guardo la categoria seleccionada
+
+let categoriaSeleccionada;
+let precioSeleccionado;
 
 filterCategoria.addEventListener('click', (e) => {
   if (e.target.classList.contains('filterCategoria_indiv')) {
-    filtrarCategoria(e.target.innerText);
+    categoriaSeleccionada = e.target.innerText;
   }
+  filtrarCatalogo(categoriaSeleccionada, precioSeleccionado);
 });
 
-//Creación de array filtrado
+//Selecciono precio a filtrar, guardando el valor en variable y también inserto valor en HTML
 
-function filtrarCategoria(categoria) {
+rangoPrecio.addEventListener('input', (e) => {
+  //Convierto a numero el precio del slider ya que viene como string
+  precioSeleccionado = parseInt(e.target.value);
+  filterPrice_value.innerText = `$${precioSeleccionado.toLocaleString(
+    'es-AR'
+  )}`;
+  filtrarCatalogo(categoriaSeleccionada, precioSeleccionado);
+});
+
+////////////////// Funcionabilidad de Filtrado de Catalogo e Inserción/////////////////////
+
+//Creación de array de productos filtrado
+
+//Para poder filtrar con más de una variable, utilizó las variables de filtro guardadas anterioremente en cada evento y las aplico a una misma función para filtrar el Catalogo
+
+function filtrarCatalogo(categoria, precio) {
+  //Si la categoria o el precio no se filtraron, asignar los valores por defecto que son "Todas" y el precio maximo de mis productos.
+  categoria = categoria || 'Todas';
+  precio = precio || parseInt(rangoPrecio.value);
+  //Agrego condicional ya que si la categoria no se filtró, entonces solamente voy a filtra por precio.
   if (categoria != 'Todas') {
-    catalogoFiltrado = catalogo.filter((item) => categoria == item.categoria);
+    const catalogoFiltrado = catalogo.filter(
+      (item) => item.categoria == categoria && item.precio <= precio
+    );
     insertarCatalogo(catalogoFiltrado);
   } else {
-    insertarCatalogo(catalogo);
+    const catalogoFiltrado = catalogo.filter((item) => item.precio <= precio);
+    insertarCatalogo(catalogoFiltrado);
   }
 }
 
