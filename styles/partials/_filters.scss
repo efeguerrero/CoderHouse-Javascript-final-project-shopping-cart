@@ -88,6 +88,16 @@
   }
 }
 
+.filterOrdenar {
+  &_precio_indiv {
+    @extend .filterCategoria_indiv;
+    &:hover {
+      color: $copper;
+      transition: all 0.1s linear;
+    }
+  }
+}
+
 //////////////Media Queries////////////////////
 
 @media screen and (min-width: 768px) {

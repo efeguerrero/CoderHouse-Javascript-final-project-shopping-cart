@@ -455,14 +455,14 @@ body {
 .filterCategoria {
   margin: 2rem 0;
 }
-.filterCategoria_indiv {
+.filterCategoria_indiv, .filterOrdenar_precio_indiv {
   background-color: transparent;
   border: none;
   cursor: pointer;
   display: block;
   margin: 0.5rem 0;
 }
-.filterCategoria_indiv:hover {
+.filterCategoria_indiv:hover, .filterOrdenar_precio_indiv:hover {
   color: #76462e;
   transition: all 0.1s linear;
 }
@@ -484,6 +484,11 @@ body {
 }
 .filterPrice_value {
   font-size: 0.9rem;
+}
+
+.filterOrdenar_precio_indiv:hover {
+  color: #76462e;
+  transition: all 0.1s linear;
 }
 
 @media screen and (min-width: 768px) {

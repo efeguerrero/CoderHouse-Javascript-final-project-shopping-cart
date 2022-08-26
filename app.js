@@ -182,10 +182,17 @@ function insertarCatalogo(arrayProductos) {
   // Antes de insertar vacío lo que ya existe en HTML para no duplicar inserción
   products_container.innerHTML = '';
 
-  for (const producto of arrayProductos) {
-    const indiv_product = document.createElement('div');
-    indiv_product.classList.add('indiv_product');
-    indiv_product.innerHTML = `<div class="indiv_product_img_container">
+  if (arrayProductos.length == 0) {
+    //Si el array que voy a insertar está vacío por los filtros muestro mensaje de busqueda sin resltados
+    const errorBusqueda = document.createElement('h3');
+    errorBusqueda.classList.add('errorBusqueda');
+    errorBusqueda.innerText = 'Su busqueda no arrojó resultados';
+    products_container.appendChild(errorBusqueda);
+  } else {
+    for (const producto of arrayProductos) {
+      const indiv_product = document.createElement('div');
+      indiv_product.classList.add('indiv_product');
+      indiv_product.innerHTML = `<div class="indiv_product_img_container">
             <img
               src="${producto.img_src}"
               class="indiv_product_img"
@@ -207,7 +214,8 @@ function insertarCatalogo(arrayProductos) {
             </div>
           </div>`;
 
-    products_container.appendChild(indiv_product);
+      products_container.appendChild(indiv_product);
+    }
   }
 }
 //////// Inserción de Carrito en Sidebar//////////////////
@@ -401,12 +409,13 @@ function rangoPrecios() {
   return precioMax;
 }
 
-/////////////// Selección de Filtros de Categoria y Precio///////////////////
+/////////////// Selección de Filtros de Categoria, Precio y Ordenamiento///////////////////
 
 //Evento para filtrar Categoria. Escucho por delegación de eventos los clicks en botones y guardo la categoria seleccionada
 
 let categoriaSeleccionada;
 let precioSeleccionado;
+let ordenar;
 
 filterCategoria.addEventListener('click', (e) => {
   if (e.target.classList.contains('filterCategoria_indiv')) {
@@ -426,7 +435,7 @@ rangoPrecio.addEventListener('input', (e) => {
   filtrarCatalogo(categoriaSeleccionada, precioSeleccionado);
 });
 
-////////////////// Funcionabilidad de Filtrado de Catalogo e Inserción/////////////////////
+////////////////// Funcionabilidad de Filtrado de Catalogo, Ordenamiento e Inserción/////////////////////
 
 //Creación de array de productos filtrado
 
