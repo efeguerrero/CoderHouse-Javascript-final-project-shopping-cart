@@ -6,6 +6,8 @@ let catalogo = [];
 
 let carrito = [];
 
+let catalogoFiltrado = [];
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////DEFINICIÓN DE FUNCIONES DE LÓGICA DE CARRITO/CATALOGO///////////
 /////////////////////////////////////////////////////////////////////////////
@@ -152,6 +154,7 @@ filter_close.addEventListener('click', function () {
 async function cargarCatalogo() {
   const response = await fetch('./data/catalogo.json');
   catalogo = await response.json();
+  catalogoFiltrado = [...catalogo];
 }
 
 ///////////////////////////////////////////////////////
@@ -164,8 +167,9 @@ async function cargarCatalogo() {
 
 window.addEventListener('DOMContentLoaded', async () => {
   await cargarCatalogo();
-  insertarCatalogo();
+  insertarCatalogo(catalogo);
   carritoStorage();
+  crearFiltros();
 });
 
 ///////////////Lógica de Inserción de Productos del Catalogo///////////
@@ -174,8 +178,13 @@ const products_container = document.querySelector('.products_container');
 
 //Asigno dinamicanete data-id = producto.id para despues identificar que producto estoy agregando al carrito con cada click
 
-function insertarCatalogo() {
-  for (const producto of catalogo) {
+//La función ahora posee argumento para insertar tanto el catalogo madre como el filtrado
+
+function insertarCatalogo(arrayProductos) {
+  // Antes de insertar vacío lo que ya existe en HTML para no duplicar inserción
+  products_container.innerHTML = '';
+
+  for (const producto of arrayProductos) {
     const indiv_product = document.createElement('div');
     indiv_product.classList.add('indiv_product');
     indiv_product.innerHTML = `<div class="indiv_product_img_container">
@@ -208,8 +217,9 @@ function insertarCatalogo() {
 const cart_products_list = document.querySelector('.cart_products_list');
 
 function insertarCarrito() {
-  //Vacio primero container de carrito para no insertar sobre lo existente
   //Luego inserto iterando sobre carrito con un for of e insertando dinamicanete los items. En todos los tags agrego data-id=item.id para luego poder armar la opción de modificar las cantidades directamente en el carrito, identificando con esto que item estoy modificando.
+
+  //Vacio primero container de carrito para no insertar sobre lo existente
   cart_products_list.innerHTML = '';
 
   for (const item of carrito) {
@@ -349,6 +359,54 @@ function carritoStorage() {
   const carritoStorage = JSON.parse(localStorage.getItem('carrito'));
   carrito = carritoStorage || [];
   insertarCarrito();
+}
+
+////////////// Insecrión de Categorias de Filtros de Producto///////////////
+
+//A partir del catalogo creamos un array de las categorias, sin repetir, para luego insertarlo
+
+//Creación del Array de Categorias únicas (la llamo una vez cargado el DOM y el catalogo desde API local)
+
+function crearFiltros() {
+  const filtrosCategorias = [
+    'Todas',
+    ...new Set(catalogo.map((item) => item.categoria)),
+  ];
+  insertarFiltros(filtrosCategorias);
+}
+
+//Función para insertar HTML
+
+const filterCategoria = document.querySelector('.filterCategoria');
+
+function insertarFiltros(array) {
+  for (const item of array) {
+    const filterBtn = document.createElement('button');
+    filterBtn.classList.add('filterCategoria_indiv');
+    filterBtn.innerText = item;
+    filterCategoria.appendChild(filterBtn);
+  }
+}
+
+////////////////// Funcionalidad de Filtrado por Categoria/////////////////////
+
+//Evento para filtrar Categoria
+
+filterCategoria.addEventListener('click', (e) => {
+  if (e.target.classList.contains('filterCategoria_indiv')) {
+    filtrarCategoria(e.target.innerText);
+  }
+});
+
+//Creación de array filtrado
+
+function filtrarCategoria(categoria) {
+  if (categoria != 'Todas') {
+    catalogoFiltrado = catalogo.filter((item) => categoria == item.categoria);
+    insertarCatalogo(catalogoFiltrado);
+  } else {
+    insertarCatalogo(catalogo);
+  }
 }
 
 /////////////////////////////////////////////////////
