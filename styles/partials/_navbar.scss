@@ -1,6 +1,6 @@
 .navbar {
   background-color: $white;
-  height: 9vh;
+  height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,12 +27,12 @@
     }
     &_counter {
       position: absolute;
-      top: -30%;
+      top: -25%;
       left: 55%;
-      background-color: $sepia;
+      background-color: rgb(138, 137, 137);
       color: $white;
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 1.4rem;
+      height: 1.4rem;
       border-radius: 50%;
       display: flex;
       align-items: center;

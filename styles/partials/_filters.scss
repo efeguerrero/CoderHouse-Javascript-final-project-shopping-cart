@@ -22,7 +22,7 @@
 .filtersContainer {
   background-color: $white;
   position: fixed;
-  width: 55%;
+  width: 65%;
   height: 100vh;
   top: 0;
   left: 0;
@@ -75,8 +75,8 @@
 
   &_rangeContainer {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   &_bar {
@@ -107,5 +107,13 @@
 
   .filterCategoria {
     margin: 0 0;
+  }
+
+  .filterPrice {
+    &_rangeContainer {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+    }
   }
 }

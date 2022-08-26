@@ -5,10 +5,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+
   &_img {
     width: 100%;
   }
+
   margin-bottom: 3rem;
 }
 
@@ -30,21 +31,21 @@
 
 .mainContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   margin: 2rem auto;
-  max-width: 80vw;
+  max-width: 90vw;
 }
 
 /*Product Container Style*/
 
 .products_container {
-  width: 100%;
+  //width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 16rem);
+  grid-template-columns: repeat(1, 16rem);
   grid-auto-rows: 25rem;
   justify-content: center;
-  column-gap: 7rem;
   row-gap: 4rem;
   padding: 2rem 0;
 }
@@ -55,14 +56,15 @@
   background-color: rgb(255, 255, 255);
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding-bottom: 1rem;
-  box-shadow: 14px 9px 15px -9px rgba(0, 0, 0, 0.25);
+  // box-shadow: 14px 9px 15px -9px rgba(0, 0, 0, 0.25);
+  // border: 0.5px solid rgb(228, 226, 226);
 
   &_img_container {
     height: 70%;
@@ -74,10 +76,11 @@
     height: 100%;
     overflow: hidden;
     object-fit: cover;
+    border-radius: 5px;
   }
 
   &_info {
-    width: 95%;
+    width: 100%;
     padding: 0.5rem 0.2rem;
     display: flex;
     flex-direction: column;
@@ -85,22 +88,25 @@
 
   &_title {
     margin-top: 0.3rem;
-    font-size: 1.1rem;
-    font-weight: 400;
+    font-size: 1rem;
+    font-weight: 300;
+    text-align: center;
   }
 
   &_price {
     display: block;
-    font-size: 1.1rem;
-    color: $copper;
+    font-size: 1rem;
+    color: $black;
     margin-top: 0.3rem;
     font-weight: 400;
+    text-align: center;
   }
 
   &_buy {
     margin-top: 0.8rem;
     width: 100%;
-    background-color: $copper;
+    background-color: $white;
+    filter: brightness(90%);
     border-radius: 5px;
     align-self: center;
     justify-self: end;
@@ -109,10 +115,17 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border: 1px solid rgb(232, 228, 228);
+
+    &:hover {
+      border: 1px solid $black;
+      transition: all 0.15s linear;
+      background-color: transparent;
+    }
 
     &_text {
-      color: white;
-      font-weight: 200;
+      color: $black;
+      font-weight: 400;
       padding-left: 0.5rem;
       cursor: pointer;
     }
@@ -131,14 +144,6 @@
     justify-content: center;
   }
 
-  .mainHeader {
-    width: 100vw;
-    position: relative;
-    &_img {
-      width: 100%;
-    }
-  }
-
   .mainTitle {
     font-size: 2.5rem;
     font-weight: 200;
@@ -146,19 +151,23 @@
   }
 
   .products_container {
-    //Hay que cambiar al configuración de las columnas del grid para que pueda quedar todo centrado. Hardcodear el 16rem para el ancho de las columnas me distorsiona el centrado
-    width: 100%;
-    grid-template-columns: repeat(2, 16rem);
+    grid-template-columns: repeat(1, minmax(0rem, 18rem));
+    padding: 2rem 2rem;
+    column-gap: 3rem;
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 850px) {
   .mainTitle {
     font-size: 4rem;
   }
   .products_container {
-    //Hay que cambiar al configuración de las columnas del grid para que pueda quedar todo centrado. Hardcodear el 16rem para el ancho de las columnas me distorsiona el centrado
+    grid-template-columns: repeat(2, minmax(0rem, 18rem));
+  }
+}
 
-    grid-template-columns: repeat(3, 16rem);
+@media screen and (min-width: 1440px) {
+  .products_container {
+    grid-template-columns: repeat(3, minmax(0rem, 18rem));
   }
 }
