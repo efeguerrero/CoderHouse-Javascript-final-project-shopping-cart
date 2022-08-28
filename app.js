@@ -85,25 +85,23 @@ function itemsEnCarrito() {
   return total;
 }
 
-////////// Función - Ordenar productos del catalogo por precio/////////////////////
+////////// Función - Ordenar productos del catalogo filtrado por precio/////////////////////
 
 function ordenarPrecio(array, ordenPrecio) {
   switch (ordenPrecio) {
     case 'ascendente':
       array.sort((a, b) => a.precio - b.precio);
-      console.log(array);
       break;
     case 'descendente':
       array.sort((a, b) => b.precio - a.precio);
-      console.log(array);
     default:
       break;
   }
   return array;
 }
 
-////////////////////////////////////////////////////////////////////////////////////
-////////////NAVEGACIÓN ////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////NAVEGACIÓN ////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
 
 ///////////////MOSTRAR Y CERRAR CARRITO EN SIDEBAR////////////
@@ -134,7 +132,7 @@ cart_close.addEventListener('click', function () {
   mostrarCarrito();
 });
 
-//////////////MOSTRAR Y CERRAR MENU DE FILTROS///////////////////
+//////////////MOSTRAR Y CERRAR MENU DE FILTROS EN SIDEBAR IZQUIERDO///////////////////
 
 //Selección de Elementos
 
@@ -163,7 +161,7 @@ filter_close.addEventListener('click', function () {
 });
 
 ////////////////////////////////////////////////////////////////////////////
-////////////CARGA DE DATA EXTERNA (archivo local JSON)//////////////////////
+//////////////////////CARGA DE DATA EXTERNA (archivo local JSON)////////////
 ///////////////////////////////////////////////////////////////////////////
 
 async function cargarCatalogo() {
@@ -171,32 +169,33 @@ async function cargarCatalogo() {
   catalogo = await response.json();
 }
 
-///////////////////////////////////////////////////////
-////////////FUNCIONES MANIPULACIÓN DEL DOM/////////////
-///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+////////////FUNCIONES MANIPULACIÓN DEL DOM///////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 
 ////////////////Carga Inicial de Web y datos - Catalogo desde API - Insertar Catalogo en HTML - Carrito desde Local Storage///////////////
 
-//Para asegurar la carga del catalogo antes de la inserción tengo que usar async/await (por más que la función cargarCatalogo losea) porque sino se ejecuta insertarCatalogo antes de que se llegue a cargar y la inserción queda vacia.
+//Para asegurar la carga del catalogo antes de la inserción tengo que usar async/await (por más que la función cargarCatalogo lo sea) porque sino se ejecuta insertarCatalogo antes de que se llegue a cargar y la inserción queda vacia.
 
 window.addEventListener('DOMContentLoaded', async () => {
   await cargarCatalogo();
   insertarCatalogo(catalogo);
   carritoStorage();
+  //Ejecuto función para crear filtros de categoria y precio según objetos de catalogo
   crearFiltros();
   rangoPrecios();
 });
 
-///////////////Lógica de Inserción de Productos del Catalogo///////////
+///////////////Lógica de Inserción de Productos del Catalogo///////////////////
 
 const products_container = document.querySelector('.products_container');
 
-//Asigno dinamicanete data-id = producto.id para despues identificar que producto estoy agregando al carrito con cada click
+//Al insertar asigno dinamicanete data-id = producto.id para despues identificar que producto estoy agregando al carrito con cada click
 
-//La función ahora posee argumento para insertar tanto el catalogo madre como el filtrado
+//La función ahora posee argumento para insertar tanto el catalogo madre como el filtrado según sea necesario
 
 function insertarCatalogo(arrayProductos) {
-  // Antes de insertar vacío lo que ya existe en HTML para no duplicar inserción
+  // Antes de insertar vacío lo que ya existe en HTML para no duplicar inserción cuando voy filtrando sucesivamente
   products_container.innerHTML = '';
 
   if (arrayProductos.length == 0) {
@@ -235,7 +234,7 @@ function insertarCatalogo(arrayProductos) {
     }
   }
 }
-//////// Inserción de Carrito en Sidebar//////////////////
+//////////////////// Inserción de Carrito en Sidebar//////////////////
 
 const cart_products_list = document.querySelector('.cart_products_list');
 
@@ -287,7 +286,7 @@ function insertarCarrito() {
   cartCounter();
 }
 
-//////////Lógica - Agregar Producto desde vista de Catalogo/////////
+///////////////////////////Lógica - Agregar Producto desde vista general de Catalogo///////////////////
 
 //Al insertar el catalogo con info traida con fetch y el DOMContentLoaded no puedo seleccionar los btns insertados porque el nodelist viene vacio. Uso delegación de eventos para buscar clicks en products_container y solo tomar en cuenta aquellos hechos sobre el boton. En caso de hacer click en el icono o texto del boton, targeteo el parentNode para tener la funcionalidad correcta.
 
@@ -303,6 +302,7 @@ products_container.addEventListener('click', (e) => {
       parseInt(e.target.parentNode.getAttribute('data-id'));
     actualizarCarrito(sku, 1);
     insertarCarrito();
+    //Notificación al usuario de producto agregado al carrito donde puede hacer click y abrirlo
     cartToast();
   }
 });
@@ -327,6 +327,8 @@ cart_products_list.addEventListener('click', function (e) {
 
 //////////////// Inserción HTML del Monto Total de Carrito//////////////////
 
+//Función que se llama cada vez que se ejecuta "InsertarCarrito" (linea 241) para también insertar el monto total
+
 const cart_total = document.querySelector('.cart_total');
 function insertarTotal() {
   cart_total.innerHTML = `Total: $ ${totalCarrito().toLocaleString('es-AR')}`;
@@ -339,11 +341,11 @@ const cart_reset = document.querySelector('.cart_btns_reset');
 cart_reset.addEventListener('click', function () {
   borrarCarrito();
   insertarCarrito();
-  //Cuando borro el carrito desde el mismo cierro el sidebar
+  //Cuando borro el carrito desde el mismo cierro el sidebar tamién
   mostrarCarrito();
 });
 
-////////////////////// Finalización de Compra/////////////////////
+////////////////////// Finalización de Compra////////////////////////
 
 const checkout = document.querySelector('.cart_btns_buy');
 const cart_title = document.querySelector('.cart_title');
@@ -353,7 +355,7 @@ const cart_title = document.querySelector('.cart_title');
 checkout.addEventListener('click', function () {
   //Notificación al usuario con compra finalizada y mostrando el total gastado
   checkoutToast(totalCarrito());
-  //Función a ejecutra luego de 2.5s para borrar el carrito y cerrar el sidebar una vez finalizada la compra
+  //Función a ejecutar luego de 2.5s para borrar el carrito y cerrar el sidebar una vez finalizada la compra
   setTimeout(function () {
     borrarCarrito();
     insertarCarrito();
@@ -376,7 +378,7 @@ function cartCounter() {
 
 ////////////// Carga de Local Storage al inicio de la aplicación///////////////////
 
-//Si cuando cargo la web hay items en el carrito, entonces asignar storage a carrito. Si no existe en storage ,carrito queda como array vación.
+//Si cuando cargo la web hay items en el carrito, entonces asignar storage a carrito. Si no existe en storage ,carrito queda como array vació.
 
 function carritoStorage() {
   const carritoStorage = JSON.parse(localStorage.getItem('carrito'));
@@ -384,7 +386,7 @@ function carritoStorage() {
   insertarCarrito();
 }
 
-////////////// Creación e Insecrión de Filtros de Categorias de Producto///////////////
+///////////////// Creación e Inserción de Filtros de Categorias de Producto///////////////
 
 //A partir del catalogo creamos un array de las categorias, sin repetir, para luego insertarlo
 
@@ -422,7 +424,7 @@ function rangoPrecios() {
   const precioMax = Math.max(...catalogo.map((item) => item.precio));
   rangoPrecio.setAttribute('max', `${precioMax}`);
   rangoPrecio.setAttribute('value', `${precioMax}`);
-  //Aseguro posicion del rango en el máximo de precio (para resetear filtros)
+  //Aseguro posicion del rango en el máximo de precio (para cuando resetee filtros)
   rangoPrecio.value = precioMax;
   filterPrice_value.innerText = `$${precioMax.toLocaleString('es-AR')}`;
   return precioMax;
@@ -430,13 +432,13 @@ function rangoPrecios() {
 
 /////////////// Selección de Filtros de Categoria, Precio y Ordenamiento///////////////////
 
-//Declaro las variables de filtrado para poder filtrar con mas de una a la vez
+//Declaro las variables de filtrado para poder filtrar con mas de una a la vez. Al ser variables globales y guardar su valor puedo combinar selecciones y filtrar de forma mas completa (ver como optimizar)
 
 let categoriaSeleccionada;
 let precioSeleccionado;
 let ordenPrecio;
 
-//Evento para filtrar Categoria. Escucho por delegación de eventos los clicks en botones y guardo la categoria seleccionada. Llamo función de filtrar catalogo
+//Evento para filtrar por Categoria. Escucho por delegación de eventos los clicks en botones y guardo la categoria seleccionada. Llamo función de filtrar catalogo
 
 filterCategoria.addEventListener('click', (e) => {
   if (e.target.classList.contains('filterCategoria_indiv')) {
@@ -482,31 +484,28 @@ const btn_borrarFiltros = document.querySelector('.filterBorrar');
 btn_borrarFiltros.addEventListener('click', () => {
   //Reinicio las variables de filtrado y llamo nuevamente la función de insertar
   categoriaSeleccionada = 'Todas';
-  precioSeleccionado = parseInt(rangoPrecio.value);
-  //Llamo a función para resetear posición del slider de precio
-  rangoPrecios();
+  //Llamo a función para resetear posición del slider de precio y asignar el rango máximo al filtro Precio
+  precioSeleccionado = rangoPrecios();
   ordenPrecio = 'ascendente';
-  //Inserto el original para mantener el orden de la API local
+  //Inserto el catalogo original para mantener el orden de la API local
   insertarCatalogo(catalogo);
 });
 
 ////////////////// Funcionabilidad de Filtrado de Catalogo, Ordenamiento e Inserción/////////////////////
 
-//Creación de array de productos filtrado
-
 //Para poder filtrar con más de una variable, utilizó las variables de filtro guardadas anterioremente en cada evento y las aplico a una misma función para filtrar el Catalogo
 
 function filtrarCatalogo(categoria, precio, ordenPrecio) {
-  //Si la categoria o el precio no se filtraron, asignar los valores por defecto que son "Todas" y el precio maximo de mis productos.
+  //Si la categoria o el precio no se filtraron, asignar los valores por defecto que son "Todas" y el precio maximo de mis productos. idem en el caso del orden.
   categoria = categoria || 'Todas';
   precio = precio || parseInt(rangoPrecio.value);
   ordenPrecio = ordenPrecio || 'ascendente';
-  console.log(categoria, precio, ordenPrecio);
-  //Agrego condicional ya que si la categoria no se filtró, entonces solamente voy a filtra por precio.
+  //Agrego condicional ya que si la categoria no se filtró, entonces solamente voy a filtra por precio ya que la categoria "Todas" no existe para ningun producto
   if (categoria != 'Todas') {
     const catalogoFiltrado = catalogo.filter(
       (item) => item.categoria == categoria && item.precio <= precio
     );
+    //antes de insertar el catalogo lo ordeno según el orden seleccionado
     ordenarPrecio(catalogoFiltrado, ordenPrecio);
     insertarCatalogo(catalogoFiltrado);
   } else {
@@ -516,9 +515,9 @@ function filtrarCatalogo(categoria, precio, ordenPrecio) {
   }
 }
 
-/////////////////////////////////////////////////////
-//////// NOTIFICACIONES PARA EL USUARIO//////////////
-/////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+/////////////////////// NOTIFICACIONES PARA EL USUARIO//////////////
+////////////////////////////////////////////////////////////////////
 
 /////////Toast para item en cart////////////////////
 

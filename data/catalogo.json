@@ -2,7 +2,7 @@
   {
     "id": 1,
     "nombre": "Alfombra Circular al Telar",
-    "precio": 2700,
+    "precio": 2760,
     "img_src": "./img/productos/item_1.jpeg",
     "categoria": "Alfombras"
   },

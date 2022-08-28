@@ -29,7 +29,7 @@
   flex-direction: column;
   align-items: center;
   //No va Justify-Content:center para evitar que cuando crezca el DIV por tener más productos (al tener que ir los items siempre al centro con espacios iguales a los costados) crezca el espacio vacio exterior empujando items fuera de la pantalla.
-  padding: 4rem 1rem;
+  padding: 5rem 1rem;
   overflow: auto;
   transform: translateX(100%);
   transition: $Maintransition;
