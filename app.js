@@ -422,17 +422,21 @@ function rangoPrecios() {
   const precioMax = Math.max(...catalogo.map((item) => item.precio));
   rangoPrecio.setAttribute('max', `${precioMax}`);
   rangoPrecio.setAttribute('value', `${precioMax}`);
+  //Aseguro posicion del rango en el máximo de precio (para resetear filtros)
+  rangoPrecio.value = precioMax;
   filterPrice_value.innerText = `$${precioMax.toLocaleString('es-AR')}`;
   return precioMax;
 }
 
 /////////////// Selección de Filtros de Categoria, Precio y Ordenamiento///////////////////
 
+//Declaro las variables de filtrado para poder filtrar con mas de una a la vez
+
 let categoriaSeleccionada;
 let precioSeleccionado;
 let ordenPrecio;
 
-//Evento para filtrar Categoria. Escucho por delegación de eventos los clicks en botones y guardo la categoria seleccionada
+//Evento para filtrar Categoria. Escucho por delegación de eventos los clicks en botones y guardo la categoria seleccionada. Llamo función de filtrar catalogo
 
 filterCategoria.addEventListener('click', (e) => {
   if (e.target.classList.contains('filterCategoria_indiv')) {
@@ -441,7 +445,7 @@ filterCategoria.addEventListener('click', (e) => {
   filtrarCatalogo(categoriaSeleccionada, precioSeleccionado, ordenPrecio);
 });
 
-//Evento para filtrar Precio, guardando el valor en variable y también inserto valor en HTML
+//Evento para filtrar Precio, guardando el valor en variable y también inserto valor en HTML para que visualce el usuario
 
 rangoPrecio.addEventListener('input', (e) => {
   //Convierto a numero el precio del slider ya que viene como string
@@ -469,6 +473,21 @@ btn_ordenPrecio.forEach((btn) => {
       filtrarCatalogo(categoriaSeleccionada, precioSeleccionado, ordenPrecio);
     }
   });
+});
+
+//Evento para borrar todos los filtros y orden y reiniciar el catalogo
+
+const btn_borrarFiltros = document.querySelector('.filterBorrar');
+
+btn_borrarFiltros.addEventListener('click', () => {
+  //Reinicio las variables de filtrado y llamo nuevamente la función de insertar
+  categoriaSeleccionada = 'Todas';
+  precioSeleccionado = parseInt(rangoPrecio.value);
+  //Llamo a función para resetear posición del slider de precio
+  rangoPrecios();
+  ordenPrecio = 'ascendente';
+  //Inserto el original para mantener el orden de la API local
+  insertarCatalogo(catalogo);
 });
 
 ////////////////// Funcionabilidad de Filtrado de Catalogo, Ordenamiento e Inserción/////////////////////

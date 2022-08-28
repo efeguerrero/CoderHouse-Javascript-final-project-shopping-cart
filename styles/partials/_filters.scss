@@ -98,6 +98,20 @@
   }
 }
 
+.filterBorrar {
+  @extend .filterCategoria_indiv;
+  margin-top: 3rem;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid $black;
+  border-radius: 4px;
+
+  &:hover {
+    color: $white;
+    background-color: $black;
+    transition: all 0.1s linear;
+  }
+}
+
 //////////////Media Queries////////////////////
 
 @media screen and (min-width: 768px) {

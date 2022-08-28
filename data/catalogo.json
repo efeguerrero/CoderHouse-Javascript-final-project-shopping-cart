@@ -37,28 +37,28 @@
   {
     "id": 6,
     "nombre": "Mochila Roja",
-    "precio": 3500,
+    "precio": 3400,
     "img_src": "./img/productos/item_6.jpeg",
     "categoria": "Mochilas"
   },
   {
     "id": 7,
     "nombre": "Mochila Gris",
-    "precio": 3500,
+    "precio": 3550,
     "img_src": "./img/productos/item_7.jpeg",
     "categoria": "Mochilas"
   },
   {
     "id": 8,
     "nombre": "Mochila Azul Oscuro",
-    "precio": 3500,
+    "precio": 3550,
     "img_src": "./img/productos/item_8.jpeg",
     "categoria": "Mochilas"
   },
   {
     "id": 9,
     "nombre": "Mochila Azul y Marron",
-    "precio": 3500,
+    "precio": 3700,
     "img_src": "./img/productos/item_9.jpeg",
     "categoria": "Mochilas"
   },
@@ -72,7 +72,7 @@
   {
     "id": 11,
     "nombre": "Tote Bag",
-    "precio": 3500,
+    "precio": 3600,
     "img_src": "./img/productos/item_11.jpeg",
     "categoria": "Carteras"
   },

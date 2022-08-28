@@ -172,7 +172,7 @@ body {
 }
 .navbar {
   background-color: #ffffff;
-  height: 10vh;
+  height: 8vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -455,14 +455,14 @@ body {
 .filterCategoria {
   margin: 2rem 0;
 }
-.filterCategoria_indiv, .filterOrdenar_precio_indiv {
+.filterCategoria_indiv, .filterBorrar, .filterOrdenar_precio_indiv {
   background-color: transparent;
   border: none;
   cursor: pointer;
   display: block;
   margin: 0.5rem 0;
 }
-.filterCategoria_indiv:hover, .filterOrdenar_precio_indiv:hover {
+.filterCategoria_indiv:hover, .filterBorrar:hover, .filterOrdenar_precio_indiv:hover {
   color: #76462e;
   transition: all 0.1s linear;
 }
@@ -488,6 +488,18 @@ body {
 
 .filterOrdenar_precio_indiv:hover {
   color: #76462e;
+  transition: all 0.1s linear;
+}
+
+.filterBorrar {
+  margin-top: 3rem;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid #000000;
+  border-radius: 4px;
+}
+.filterBorrar:hover {
+  color: #ffffff;
+  background-color: #000000;
   transition: all 0.1s linear;
 }
 
