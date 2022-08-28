@@ -85,6 +85,23 @@ function itemsEnCarrito() {
   return total;
 }
 
+////////// Función - Ordenar productos del catalogo por precio/////////////////////
+
+function ordenarPrecio(array, ordenPrecio) {
+  switch (ordenPrecio) {
+    case 'ascendente':
+      array.sort((a, b) => a.precio - b.precio);
+      console.log(array);
+      break;
+    case 'descendente':
+      array.sort((a, b) => b.precio - a.precio);
+      console.log(array);
+    default:
+      break;
+  }
+  return array;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////NAVEGACIÓN ////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
@@ -411,20 +428,20 @@ function rangoPrecios() {
 
 /////////////// Selección de Filtros de Categoria, Precio y Ordenamiento///////////////////
 
-//Evento para filtrar Categoria. Escucho por delegación de eventos los clicks en botones y guardo la categoria seleccionada
-
 let categoriaSeleccionada;
 let precioSeleccionado;
-let ordenar;
+let ordenPrecio;
+
+//Evento para filtrar Categoria. Escucho por delegación de eventos los clicks en botones y guardo la categoria seleccionada
 
 filterCategoria.addEventListener('click', (e) => {
   if (e.target.classList.contains('filterCategoria_indiv')) {
     categoriaSeleccionada = e.target.innerText;
   }
-  filtrarCatalogo(categoriaSeleccionada, precioSeleccionado);
+  filtrarCatalogo(categoriaSeleccionada, precioSeleccionado, ordenPrecio);
 });
 
-//Selecciono precio a filtrar, guardando el valor en variable y también inserto valor en HTML
+//Evento para filtrar Precio, guardando el valor en variable y también inserto valor en HTML
 
 rangoPrecio.addEventListener('input', (e) => {
   //Convierto a numero el precio del slider ya que viene como string
@@ -432,7 +449,26 @@ rangoPrecio.addEventListener('input', (e) => {
   filterPrice_value.innerText = `$${precioSeleccionado.toLocaleString(
     'es-AR'
   )}`;
-  filtrarCatalogo(categoriaSeleccionada, precioSeleccionado);
+  filtrarCatalogo(categoriaSeleccionada, precioSeleccionado, ordenPrecio);
+});
+
+//Evento para seleccionar forma de ordenar precio y ejecutar la funcion de filtrado/orden
+
+const btn_ordenPrecio = document.querySelectorAll(
+  '.filterOrdenar_precio_indiv'
+);
+
+btn_ordenPrecio.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    if (e.target.classList.contains('ordenarPrecio_a')) {
+      ordenPrecio = 'ascendente';
+      filtrarCatalogo(categoriaSeleccionada, precioSeleccionado, ordenPrecio);
+    }
+    if (e.target.classList.contains('ordenarPrecio_d')) {
+      ordenPrecio = 'descendente';
+      filtrarCatalogo(categoriaSeleccionada, precioSeleccionado, ordenPrecio);
+    }
+  });
 });
 
 ////////////////// Funcionabilidad de Filtrado de Catalogo, Ordenamiento e Inserción/////////////////////
@@ -441,18 +477,22 @@ rangoPrecio.addEventListener('input', (e) => {
 
 //Para poder filtrar con más de una variable, utilizó las variables de filtro guardadas anterioremente en cada evento y las aplico a una misma función para filtrar el Catalogo
 
-function filtrarCatalogo(categoria, precio) {
+function filtrarCatalogo(categoria, precio, ordenPrecio) {
   //Si la categoria o el precio no se filtraron, asignar los valores por defecto que son "Todas" y el precio maximo de mis productos.
   categoria = categoria || 'Todas';
   precio = precio || parseInt(rangoPrecio.value);
+  ordenPrecio = ordenPrecio || 'ascendente';
+  console.log(categoria, precio, ordenPrecio);
   //Agrego condicional ya que si la categoria no se filtró, entonces solamente voy a filtra por precio.
   if (categoria != 'Todas') {
     const catalogoFiltrado = catalogo.filter(
       (item) => item.categoria == categoria && item.precio <= precio
     );
+    ordenarPrecio(catalogoFiltrado, ordenPrecio);
     insertarCatalogo(catalogoFiltrado);
   } else {
     const catalogoFiltrado = catalogo.filter((item) => item.precio <= precio);
+    ordenarPrecio(catalogoFiltrado, ordenPrecio);
     insertarCatalogo(catalogoFiltrado);
   }
 }
